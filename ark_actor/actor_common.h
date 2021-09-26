@@ -6,6 +6,7 @@
 #endif
 
 #include "stdlib.h"
+#include "../ark_common/gs_array.h"
 
 enum TASK_RUN_STATUS {
 	IDLE,				// ¿ÕÏÐÖÐ

@@ -66,7 +66,7 @@ VOID ACTOR_SERVER_ROUTINE(actor_server* self) {
 
 		if (idle_cnt > 10000) {
 			self->status = IDLE;
-			_sleep(100);
+			KeClearEvent(pkEvent);
 		}
 
 		void* node = list->first(list_array);

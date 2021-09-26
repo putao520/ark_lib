@@ -1,6 +1,5 @@
 #pragma once
 #include "actor_common.h"
-#include "../ark_common/gs_array.h"
 
 EXTERN_C_START
 
