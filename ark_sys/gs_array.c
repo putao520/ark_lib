@@ -1,9 +1,9 @@
 #include "gs_array.h"
 
 array_list* NewArrayImpl(unsigned int data_size, list_remove_callback cb) {
-	array_list* self = _malloc(sizeof(array_list));
+	array_list* self = (array_list*)_malloc(sizeof(array_list));
 	if (self) {
-		self->handle = _list(data_size, NULL);
+		self->handle = _list((char)data_size, NULL);
 
 		self->insert = insert_list_node;
 		self->remove = del_list_node;
@@ -14,6 +14,9 @@ array_list* NewArrayImpl(unsigned int data_size, list_remove_callback cb) {
 		self->next = next_list_node;
 		self->data = data_list_node;
 		self->remove_node = remove_list_node;
+
+		if (cb)
+			set_on_remove_node(self->handle, cb);
 	}
 	return self;
 }

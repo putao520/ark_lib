@@ -2,17 +2,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "stdarg.h"
+#include "stdint.h"
 
 #ifdef WIN_KERNEL
-#include <ntifs.h>
 #include <ntddk.h>
-#include <Ntstrsafe.h>
-#include <windef.h>
-#include <intrin.h>
-#include <limits.h>
+#include <ntstrsafe.h>
 #include "stdbool.h"
 #else
 #include <Windows.h>
+#endif
+
+#ifndef WIN_KERNEL
 typedef short CSHORT;
 typedef struct _TIME_FIELDS {
 	CSHORT Year;        // range [1601...]
@@ -27,8 +28,7 @@ typedef struct _TIME_FIELDS {
 typedef TIME_FIELDS* PTIME_FIELDS;
 #endif
 
-#include "stdarg.h"
-#include "stdint.h"
+EXTERN_C_START
 
 #define DELAY_ONE_MICROSECOND 	(-10)
 #define DELAY_ONE_MILLISECOND	(DELAY_ONE_MICROSECOND*1000)
@@ -64,7 +64,9 @@ typedef TIME_FIELDS* PTIME_FIELDS;
 	char* g_uitoa(unsigned __int32 num, int radix);
 
 #endif
-	double _atof(const char* s);
-	
 
-	
+#ifndef WIN_KERNEL
+	double _atof(const char* s);
+#endif
+
+EXTERN_C_END

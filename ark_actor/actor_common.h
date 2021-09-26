@@ -6,9 +6,11 @@
 #endif
 
 #include "stdlib.h"
-#include "../ark_common/gs_array.h"
+#include "../ark_sys/gs_array.h"
 
-enum TASK_RUN_STATUS {
+EXTERN_C_START
+
+typedef enum TASK_RUN_STATUS {
 	IDLE,				// 空闲中
 	RUNNING,			// 运行中
 	RETURNNING,			// 取值中
@@ -49,3 +51,5 @@ typedef struct actor_server {
 	void* event_object;
 #endif
 }actor_server;
+
+EXTERN_C_END

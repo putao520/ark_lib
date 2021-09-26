@@ -1,5 +1,5 @@
 #pragma once
-#include "actor_common.h"
+#include "../ark_actor/actor_common.h"
 #include "../ark_lib/driver_loader.h"
 
 class actor_client {
@@ -18,5 +18,4 @@ public:
 private:
 	task_block* task;			// 所属任务块
 	driver_loader* device;		// 设备对象
-	BOOL copy;
 };

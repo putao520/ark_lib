@@ -61,6 +61,9 @@
     <Filter Include="源文件\gs_driver\actor_client">
       <UniqueIdentifier>{e84d3c93-42fe-4c39-b212-1bb49b7027f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\test">
+      <UniqueIdentifier>{e7461e5e-0ff7-43b0-9b98-e9e74652ebb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -111,8 +114,11 @@
     <ClCompile Include="process_adjust.cpp">
       <Filter>源文件\until\process_adjust</Filter>
     </ClCompile>
-    <ClCompile Include="..\ark_actor\actor_client.cpp">
+    <ClCompile Include="actor_client.cpp">
       <Filter>源文件\gs_driver\actor_client</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>源文件\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,14 +167,17 @@
     <ClInclude Include="process_adjust.h">
       <Filter>源文件\until\process_adjust</Filter>
     </ClInclude>
-    <ClInclude Include="..\ark_actor\actor_client.h">
+    <ClInclude Include="..\ark_actor\ark_common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_client.h">
       <Filter>源文件\gs_driver\actor_client</Filter>
     </ClInclude>
     <ClInclude Include="..\ark_actor\actor_common.h">
       <Filter>源文件\gs_driver\actor_client</Filter>
     </ClInclude>
-    <ClInclude Include="..\ark_actor\ark_common.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="test.h">
+      <Filter>源文件\test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

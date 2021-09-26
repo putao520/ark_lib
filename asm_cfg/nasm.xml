@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">  
+  <Rule  
+    Name="NASM"  
+    PageTemplate="tool"  
+    DisplayName="Netwide Assembler"  
+    Order="200">  
+    <Rule.DataSource>  
+      <DataSource  
+        Persistence="ProjectFile"  
+        ItemType="NASM" />  
+    </Rule.DataSource>  
+    <Rule.Categories>  
+      <Category  
+        Name="General">  
+        <Category.DisplayName>  
+          <sys:String>常规</sys:String>  
+        </Category.DisplayName>  
+      </Category>  
+      <Category  
+        Name="Preprocessor">  
+        <Category.DisplayName>  
+          <sys:String>预处理器</sys:String>  
+        </Category.DisplayName>  
+      </Category>  
+      <Category  
+        Name="Assembler Options">  
+        <Category.DisplayName>  
+          <sys:String>汇编</sys:String>  
+        </Category.DisplayName>  
+      </Category>  
+      <Category  
+        Name="Advanced">  
+        <Category.DisplayName>  
+          <sys:String>高级 </sys:String>  
+        </Category.DisplayName>  
+      </Category>        
+      <Category  
+        Name="Command Line"  
+        Subtype="CommandLine">  
+        <Category.DisplayName>  
+          <sys:String>命令行</sys:String>  
+        </Category.DisplayName>  
+      </Category>  
+    </Rule.Categories>  
+    <StringProperty  
+      Name="Inputs"  
+      Category="Command Line"  
+      IsRequired="true">  
+      <StringProperty.DataSource>  
+        <DataSource  
+          Persistence="ProjectFile"  
+          ItemType="NASM"  
+          SourceType="Item" />  
+      </StringProperty.DataSource>  
+    </StringProperty>  
+      
+  <StringProperty  
+      Name="OutputFormat"        
+      Category="Assembler Options"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="输出文件名"  
+      Description="指定输出目标文件名.-o [value]"  
+      Switch="-o [value]"  
+    />    
+  
+    <EnumProperty  
+      Name="Outputswitch"  
+      Category="Assembler Options"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="目标格式"  
+      Description="选择一个平台相关的输出格式类型.如Windows选择win32或者win64；Linux选择ELF32或者ELF64。Windows链接器不能使用ELF和Binary格式，否则会出错">  
+      <EnumValue  
+        Name="0"  
+        DisplayName="Win32 微软Win32(x86)目标文件格式"  
+        Switch="-f win32" />  
+      <EnumValue  
+        Name="1"  
+        DisplayName="Win64 微软Win64(x64)目标文件格式"  
+        Switch="-f win64" />  
+      <EnumValue  
+        Name="2"  
+        DisplayName="COFF文件格式"  
+        Switch="-f coff" />   
+      <EnumValue  
+        Name="3"  
+        DisplayName="Linux x86 ELF格式"  
+        Switch="-f elf32" />   
+      <EnumValue  
+        Name="4"  
+        DisplayName="Linux x64 ELF格式"  
+        Switch="-f elf64" />   
+      <EnumValue  
+        Name="5"  
+        DisplayName="纯二进制文件格式"  
+        Switch="-f bin" />   
+    </EnumProperty>      
+      
+    <StringListProperty  
+    Name="AssembledCodeListingFile"  
+    Category="Assembler Options"  
+    DisplayName="汇编代码列表文件"      
+    Description="生成一个汇编代码列表文件.     (-l [file])"  
+    HelpUrl="http://www.nasm.us/doc/"  
+    Switch="-l &quot;[value]&quot;"  
+    />  
+      
+    <BoolProperty  
+    Name="GenerateDebugInformation"  
+    Category="Assembler Options"  
+    DisplayName="生成调试信息"  
+    Description="生成调试信息.     (-g)"  
+    HelpUrl="http://www.nasm.us/doc/"  
+    Switch="-g"      
+    />  
+        
+  <StringListProperty  
+      Name="ErrorReporting"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="重定向错误信息到文件"  
+      Description="将错误信息输出到文件"  
+      Switch="-Z &quot;[value]&quot;"          
+    />  
+      
+    <StringListProperty  
+    Name="IncludePaths"  
+    Category="General"  
+    DisplayName="包含目录"  
+    Description="设置包含文件路径.     (-I[path])"  
+    HelpUrl="http://www.nasm.us/doc/"  
+    Switch="-I[value]"  
+    />  
+      
+    <StringListProperty  
+    Name="PreprocessorDefinitions"  
+    Category="Preprocessor"  
+    HelpUrl="http://www.nasm.us/doc/"  
+    DisplayName="预处理器定义"  
+    Description="预处理器定义.     (-D[symbol])"  
+    Switch="-D[value]"  
+    />  
+      
+  <StringListProperty  
+    Name="UndefinePreprocessorDefinitions"  
+    Category="Preprocessor"  
+    HelpUrl="http://www.nasm.us/doc/"  
+    DisplayName="取消预处理器定义"  
+    Description="取消预处理器定义.     (-U[symbol])"      
+    Switch="-U[value]"  
+    />  
+      
+    <EnumProperty  
+      Name="ErrorReportingFormat"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="错误报告格式"  
+      Description="选择一个错误报告的格式，如GNU或者VC">  
+      <EnumValue  
+        Name="0"  
+        DisplayName="-Xgnu    GNU风格（默认）"  
+        Switch="-Xgnu" />  
+      <EnumValue  
+        Name="1"  
+        DisplayName="-Xvc Microsoft Visual C++风格"  
+        Switch="-Xvc" />        
+    </EnumProperty>  
+      
+    <BoolProperty  
+    Name="TreatWarningsAsErrors"  
+    Category="Assembler Options"  
+    DisplayName="将警告视为错误"  
+    Description="将所有编译器警告都视为错误.     (-Werror)"  
+    HelpUrl="http://www.nasm.us/doc/"  
+    Switch="-Werror"  
+    />  
+  
+    <BoolProperty  
+      Name="floatunderflow"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="float-underflow"  
+      Description="floating point underflow (default off)"  
+      Switch="-w+float-underflow" />  
+  
+  <BoolProperty  
+      Name="macrodefaults"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="Disable macro-defaults"  
+      Description="macros with more default than optional parameters (default on)"  
+      Switch="-w-macro-defaults" />  
+  
+  <BoolProperty  
+      Name="user"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="Disable user"  
+      Description="%warning directives (default on)"  
+      Switch="-w-user" />  
+  
+  <BoolProperty  
+      Name="floatoverflow"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="Disable float-overflow"  
+      Description="floating point overflow (default on)"  
+      Switch="-w-float-overflow" />  
+  
+  <BoolProperty  
+      Name="floatdenorm"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="float-denorm"  
+      Description="floating point denormal (default off)"  
+      Switch="-w+float-denorm" />  
+  
+  <BoolProperty  
+      Name="numberoverflow"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="Disable number-overflow"  
+      Description="numeric constant does not fit (default on)"  
+      Switch="-w-number-overflow" />  
+  
+  <BoolProperty  
+      Name="macroselfref"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="macro-selfref"  
+      Description="cyclic macro references (default off)"  
+      Switch="-w+macro-selfref" />  
+  
+  <BoolProperty  
+      Name="floattoolong"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="Disable float-toolong"  
+      Description=" too many digits in floating-point number (default on)"  
+      Switch="-w-float-toolong" />  
+  
+  <BoolProperty  
+      Name="orphanlabels"  
+      Category="Advanced"  
+      HelpUrl="http://www.nasm.us/doc/"  
+      DisplayName="Disable orphan-labels"  
+      Description="labels alone on lines without trailing `:' (default on)"  
+      Switch="-w-orphan-labels" />  
+  
+  <StringProperty  
+      Name="CommandLineTemplate"  
+      DisplayName="命令行"  
+      Visible="False"  
+      IncludeInCommandLine="False" />  
+  
+  <DynamicEnumProperty  
+        Name="NASMBeforeTargets"  
+        Category="General"  
+        EnumProvider="Targets"  
+        IncludeInCommandLine="False">  
+      <DynamicEnumProperty.DisplayName>  
+        <sys:String>Execute Before</sys:String>  
+      </DynamicEnumProperty.DisplayName>  
+      <DynamicEnumProperty.Description>  
+        <sys:String>Specifies the targets for the build customization to run before.</sys:String>  
+      </DynamicEnumProperty.Description>  
+      <DynamicEnumProperty.ProviderSettings>  
+        <NameValuePair  
+          Name="Exclude"  
+          Value="^NASMBeforeTargets|^Compute" />  
+      </DynamicEnumProperty.ProviderSettings>  
+      <DynamicEnumProperty.DataSource>  
+        <DataSource  
+          Persistence="ProjectFile"  
+          ItemType=""  
+          HasConfigurationCondition="true" />  
+      </DynamicEnumProperty.DataSource>  
+    </DynamicEnumProperty>  
+  <DynamicEnumProperty  
+      Name="NASMAfterTargets"  
+      Category="General"  
+      EnumProvider="Targets"  
+      IncludeInCommandLine="False">  
+      <DynamicEnumProperty.DisplayName>  
+        <sys:String>Execute After</sys:String>  
+      </DynamicEnumProperty.DisplayName>  
+      <DynamicEnumProperty.Description>  
+        <sys:String>Specifies the targets for the build customization to run after.</sys:String>  
+      </DynamicEnumProperty.Description>  
+      <DynamicEnumProperty.ProviderSettings>  
+        <NameValuePair  
+          Name="Exclude"  
+          Value="^NASMAfterTargets|^Compute" />  
+      </DynamicEnumProperty.ProviderSettings>  
+      <DynamicEnumProperty.DataSource>  
+        <DataSource  
+          Persistence="ProjectFile"  
+          ItemType=""  
+          HasConfigurationCondition="true" />  
+      </DynamicEnumProperty.DataSource>  
+    </DynamicEnumProperty>  
+  <StringProperty  
+      Name="ExecutionDescription"  
+      DisplayName="Execution Description"  
+      IncludeInCommandLine="False"  
+      Visible="False" />  
+  
+  <StringListProperty  
+      Name="AdditionalDependencies"  
+      DisplayName="Additional Dependencies"  
+      IncludeInCommandLine="False"  
+      Visible="False" />  
+    
+  <StringProperty  
+      Subtype="AdditionalOptions"  
+      Name="附加选项"  
+      Category="Command Line">  
+      <StringProperty.DisplayName>  
+        <sys:String>附加选项</sys:String>  
+      </StringProperty.DisplayName>  
+      <StringProperty.Description>  
+        <sys:String>附加选项</sys:String>  
+      </StringProperty.Description>  
+    </StringProperty>  
+    
+  </Rule>  
+  <ItemType  
+    Name="NASM"  
+    DisplayName="Netwide Assembler" />  
+  <FileExtension  
+    Name="*.asm"  
+    ContentType="NASM" />  
+  <ContentType  
+    Name="NASM"  
+    DisplayName="Netwide Assembler"  
+    ItemType="NASM" />  
+</ProjectSchemaDefinitions>  

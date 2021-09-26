@@ -8,7 +8,7 @@ void SwapInputParameter(task_block_parameter* dst_parameter, task_block_paramete
 		if (src_parameter[i].size ) {
 			void* buffer = _malloc(src_parameter[i].size);
 			if (buffer) {
-				memcpy(buffer, src_parameter[i].payload, src_parameter[i].size);
+				memcpy(buffer, (void*)src_parameter[i].payload, src_parameter[i].size);
 			}
 			dst_parameter[i].payload = buffer;
 		}
@@ -19,7 +19,7 @@ void SwapOutputParameter(task_block_parameter* dst_parameter, task_block_paramet
 	for (int i = 0; i < size; i++) {
 		// 是一个输出接收参数
 		if (src_parameter[i].size && src_parameter[i].opearte == 1) {
-			memcpy(dst_parameter[i].payload, src_parameter[i].payload, dst_parameter[i].size);
+			memcpy((void *)dst_parameter[i].payload, (void*)src_parameter[i].payload, dst_parameter[i].size);
 		}
 	}
 }
@@ -30,14 +30,14 @@ uintptr_t CallActorService(task_block* pTask) {
 	task_block_parameter* parameter = pTask->parameter;
 	// 创建内核层参数中间块
 	if (pTask->copy) {
-		task_block_parameter* new_parameter = _malloc( sizeof(task_block_parameter) * 20 );
+		new_parameter = _malloc( sizeof(task_block_parameter) * 20 );
 		if (new_parameter) {
 			SwapInputParameter(new_parameter, parameter, pTask->size);
 		}
 		parameter = new_parameter;
 	}
 	// 开始调用
-	uintptr_t r = CallActorServiceGen(parameter, pTask->size, pTask->target);
+	uintptr_t r = CallActorServiceGen(parameter, pTask->size, (void *)pTask->target);
 	if (pTask->copy && new_parameter) {
 		SwapOutputParameter(parameter, new_parameter, pTask->size);
 	}
@@ -45,7 +45,6 @@ uintptr_t CallActorService(task_block* pTask) {
 }
 
 VOID ACTOR_SERVER_ROUTINE(actor_server* self) {
-	NTSTATUS status;
 	unsigned int idle_cnt = 0;
 
 	if (!self)
@@ -97,6 +96,7 @@ actor_server* serve_fn(actor_server* self) {
 	HANDLE hThread = NULL;
 	PsCreateSystemThread(&hThread, 0, NULL, NULL, NULL, ACTOR_SERVER_ROUTINE, self);
 	ZwClose(hThread);
+	return self;
 }
 
 actor_server* accpet_fn(actor_server* self, task_block* block) {

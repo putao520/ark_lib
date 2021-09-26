@@ -1,8 +1,10 @@
 #pragma once
 #include "array_list.h"
 
+EXTERN_C_START
+
 typedef unsigned int (*pfn_size)(void* handle);
-typedef unsigned int (*pfn_remove)(void* handle, void* data);
+typedef int (*pfn_remove)(void* handle, void* data);
 typedef void* (*pfn_insert)(void* handle, void* data);
 typedef void (*pfn_on_remove)(void* handle, list_remove_callback remove_cb);
 
@@ -31,3 +33,5 @@ array_list* NewArrayU32();
 array_list* NewArrayU64();
 
 void DeleteArray(array_list*);
+
+EXTERN_C_END

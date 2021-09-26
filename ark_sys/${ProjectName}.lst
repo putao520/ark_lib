@@ -1,0 +1,137 @@
+Microsoft (R) Macro Assembler (x64) Version 14.29.30133.0   09/26/21 20:55:46
+actor_server_x64.asm					     Page 1 - 1
+
+
+ 00000000			.code
+ 00000000			CallActorServiceGen PROC
+ 00000000  48/ 8B C1		mov rax, rcx
+ 00000003  48/ 8B FA		mov rdi, rdx
+ 00000006  48/ 83 EC 20		sub rsp,20h
+
+ 0000000A  48/ 83 FF 01		cmp rdi, 1
+ 0000000E  0F 85 000000FA	jne toCall
+ 00000014  48/ 8B C8		mov rcx, rax
+ 00000017  48/ 83 C0 0F		add rax,0fh
+
+ 0000001B  48/ 83 FF 02		cmp rdi, 2
+ 0000001F  0F 85 000000E9	jne toCall
+ 00000025  48/ 8B D0		mov rdx, rax
+ 00000028  48/ 83 C0 0F		add rax,0fh
+
+ 0000002C  48/ 83 FF 03		cmp rdi, 3
+ 00000030  0F 85 000000D8	jne toCall
+ 00000036  4C/ 8B C0		mov r8, rax
+ 00000039  48/ 83 C0 0F		add rax,0fh
+
+ 0000003D  48/ 83 FF 04		cmp rdi, 4
+ 00000041  0F 85 000000C7	jne toCall
+ 00000047  4C/ 8B C8		mov r9, rax
+ 0000004A  48/ 83 C0 0F		add rax,0fh
+
+ 0000004E  48/ 83 FF 05		cmp rdi, 5
+ 00000052  0F 85 000000B6	jne toCall
+ 00000058  50			push rax
+ 00000059  48/ 83 C0 0F		add rax,0fh
+
+ 0000005D  48/ 83 FF 06		cmp rdi, 6
+ 00000061  0F 85 000000A7	jne toCall
+ 00000067  50			push rax
+ 00000068  48/ 83 C0 0F		add rax,0fh
+
+ 0000006C  48/ 83 FF 07		cmp rdi, 7
+ 00000070  0F 85 00000098	jne toCall
+ 00000076  50			push rax
+ 00000077  48/ 83 C0 0F		add rax,0fh
+
+ 0000007B  48/ 83 FF 08		cmp rdi, 8
+ 0000007F  0F 85 00000089	jne toCall
+ 00000085  50			push rax
+ 00000086  48/ 83 C0 0F		add rax,0fh
+
+ 0000008A  48/ 83 FF 09		cmp rdi, 9
+ 0000008E  75 7E		jne toCall
+ 00000090  50			push rax
+ 00000091  48/ 83 C0 0F		add rax,0fh
+
+ 00000095  48/ 83 FF 0A		cmp rdi, 10
+ 00000099  75 73		jne toCall
+ 0000009B  50			push rax
+ 0000009C  48/ 83 C0 0F		add rax,0fh
+
+ 000000A0  48/ 83 FF 0B		cmp rdi, 11
+ 000000A4  75 68		jne toCall
+ 000000A6  50			push rax
+ 000000A7  48/ 83 C0 0F		add rax,0fh
+
+ 000000AB  48/ 83 FF 0C		cmp rdi, 12
+ 000000AF  75 5D		jne toCall
+ 000000B1  50			push rax
+ 000000B2  48/ 83 C0 0F		add rax,0fh
+
+ 000000B6  48/ 83 FF 0D		cmp rdi, 13
+ 000000BA  75 52		jne toCall
+ 000000BC  50			push rax
+ 000000BD  48/ 83 C0 0F		add rax,0fh
+
+ 000000C1  48/ 83 FF 0E		cmp rdi, 14
+ 000000C5  75 47		jne toCall
+ 000000C7  50			push rax
+ 000000C8  48/ 83 C0 0F		add rax,0fh
+
+ 000000CC  48/ 83 FF 0F		cmp rdi, 15
+ 000000D0  75 3C		jne toCall
+ 000000D2  50			push rax
+ 000000D3  48/ 83 C0 0F		add rax,0fh
+
+ 000000D7  48/ 83 FF 10		cmp rdi, 16
+ 000000DB  75 31		jne toCall
+ 000000DD  50			push rax
+ 000000DE  48/ 83 C0 0F		add rax,0fh
+
+ 000000E2  48/ 83 FF 11		cmp rdi, 17
+ 000000E6  75 26		jne toCall
+ 000000E8  50			push rax
+ 000000E9  48/ 83 C0 0F		add rax,0fh
+
+ 000000ED  48/ 83 FF 12		cmp rdi, 18
+ 000000F1  75 1B		jne toCall
+ 000000F3  50			push rax
+ 000000F4  48/ 83 C0 0F		add rax,0fh
+
+ 000000F8  48/ 83 FF 13		cmp rdi, 19
+ 000000FC  75 10		jne toCall
+ 000000FE  50			push rax
+ 000000FF  48/ 83 C0 0F		add rax,0fh
+
+ 00000103  48/ 83 FF 14		cmp rdi, 20
+ 00000107  75 05		jne toCall
+ 00000109  50			push rax
+ 0000010A  48/ 83 C0 0F		add rax,0fh
+
+ 0000010E			toCall:
+ 0000010E  41/ FF D0		call r8
+ 00000111  48/ 83 C4 20		add rsp, 20h
+ 00000115  C3			ret
+ 00000116			CallActorServiceGen ENDP
+				END
+Microsoft (R) Macro Assembler (x64) Version 14.29.30133.0   09/26/21 20:55:46
+actor_server_x64.asm					     Symbols 2 - 1
+
+
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+CallActorServiceGen  . . . . . .	P 	 00000000 _TEXT	Length= 00000116 Public
+  toCall . . . . . . . . . . . .	L 	 0000010E _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+
+	   0 Warnings
+	   0 Errors

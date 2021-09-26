@@ -1,6 +1,7 @@
 #include "driver_loader.h"
 #include "process_adjust.h"
 #include <filesystem>
+#include <assert.h>
 
 driver_loader::driver_loader() {
 	this->_SCM();
@@ -22,13 +23,19 @@ string driver_loader::getPath() {
 }
 driver_loader* driver_loader::setUri(const char* _uri) {
 	filesystem::path path(_uri);
-	if (!filesystem::exists(path))
-		path = canonical(path);
+
+	if (path.has_relative_path()) {
+		path = absolute(path);
+	}
+
+#ifdef _DEBUG
+	printf("Current DevFile:%ws\n", path.c_str());
+#endif
+	
+	assert(filesystem::exists(path));
 
 	this->path = path.string();
-#ifdef _DEBUG
-	printf("Current DevFile:%s\n", this->path.c_str());
-#endif
+
 	this->loadStatus = 1;
 
 	return this;
@@ -42,9 +49,11 @@ driver_loader::~driver_loader() {
 }
 
 void driver_loader::clearContext() {
+	/*
 	if (strlen(this->path.c_str()) > 0) {
 		DeleteFile(this->path.c_str());
 	}
+	*/
 }
 SC_HANDLE driver_loader::_SCM() {
 	DWORD dwRtn = 0;
@@ -68,7 +77,7 @@ SC_HANDLE driver_loader::open() {
 		return this->device;
 
 	int errNo = 0;
-	DWORD dwRtn;
+	DWORD dwRtn = 0;
 	SC_HANDLE hServiceDDK = NULL;
 
 	if (this->errCode == 0 && this->hSCManager) {
@@ -112,10 +121,110 @@ DWORD driver_loader::getStep() {
 	return this->stepCode;
 }
 
-driver_loader* driver_loader::load() {
+DWORD driver_loader::create() {
 	SC_HANDLE hServiceDDK = NULL;//NT驱动程序的服务句柄
 	int errNo = 0;
-	DWORD dwRtn;
+	DWORD dwRtn = 0;
+	do {
+		//创建驱动所对应的服务
+		hServiceDDK = CreateService(this->hSCManager,
+			this->driverName, //驱动程序的在注册表中的名字  
+			this->driverName, // 注册表驱动程序的 DisplayName 值  
+			SERVICE_ALL_ACCESS, // 加载驱动程序的访问权限  
+			SERVICE_KERNEL_DRIVER,// 表示加载的服务是驱动程序  
+			SERVICE_DEMAND_START, // 注册表驱动程序的 Start 值  
+			SERVICE_ERROR_IGNORE, // 注册表驱动程序的 ErrorControl 值  
+			this->path.c_str(), // 注册表驱动程序的 ImagePath 值  
+			NULL,  //GroupOrder HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GroupOrderList
+			NULL,
+			NULL,
+			NULL,
+			NULL);
+		this->device = hServiceDDK;
+		dwRtn = GetLastError();
+		if (dwRtn == 0) {
+			break;
+		}
+#ifdef _DEBUG
+		printf("创建服务错误![%d]\n", dwRtn);
+#endif
+		//判断服务是否失败
+		if (hServiceDDK == NULL || hServiceDDK == INVALID_HANDLE_VALUE) {
+			if (dwRtn == ERROR_SERVICE_EXISTS && errNo < 5) {
+				errNo++;
+				hServiceDDK = this->open();
+				this->stop();
+				this->remove();
+				this->close();
+				
+				Sleep(3000);
+				continue;
+			}
+			if (dwRtn == ERROR_IO_PENDING && errNo < 5) {//如果服务创建需要等待，那么就等15秒
+				errNo++;
+				Sleep(3000);
+				continue;
+			}
+			if (dwRtn != ERROR_IO_PENDING && dwRtn != ERROR_SERVICE_EXISTS) {
+				break;
+			}
+			else {
+				// _DebugPrint("创建服务错误!", dwRtn);
+				this->stepCode = 2;
+				this->errCode = dwRtn;
+				break;
+			}
+		}
+		else
+			break;
+	} while (errNo < 5 && dwRtn != 0);
+
+#ifdef _DEBUG
+	if(dwRtn == 0)
+		printf("CreateService OK\n");
+#endif
+
+	return dwRtn;
+}
+
+DWORD driver_loader::start() {
+	SC_HANDLE hServiceDDK = this->device;//NT驱动程序的服务句柄
+	int errNo = 0;
+	DWORD dwRtn = 0;
+	if (this->errCode == 0 && hServiceDDK) {
+		while (!StartService(hServiceDDK, NULL, NULL) && errNo < 5) {
+			dwRtn = GetLastError();
+			if (dwRtn == 0) {
+				break;
+			}
+#ifdef _DEBUG
+			printf("启动服务错误![%d]\n", dwRtn);
+#endif
+			if (dwRtn == ERROR_SERVICE_ALREADY_RUNNING) {
+				dwRtn = 0;
+				break;
+			}
+			if ((dwRtn == ERROR_IO_PENDING) && errNo < 5) {//如果服务创建需要等待，那么就等15秒
+				errNo++;
+				Sleep(3000);
+				continue;
+			}
+			else {
+				// _DebugPrint("启动服务错误!", dwRtn);
+				this->stepCode = 3;
+				this->errCode = dwRtn;
+				break;
+			}
+		}
+	}
+#ifdef _DEBUG
+	if (dwRtn == 0)
+		printf("StartService OK\n");
+#endif
+	return dwRtn;
+}
+
+driver_loader* driver_loader::load() {
 	// 文件不存在
 	if (!this->path.length()) {
 		this->errCode = 404;
@@ -125,85 +234,12 @@ driver_loader* driver_loader::load() {
 
 #ifdef _DEBUG
 	printf("CreateService File:%s\n", this->path.c_str());
+	printf("CreateService Name:%s\n", this->driverName);
 #endif
-	if (this->errCode == 0 && this->hSCManager && this->hSCManager != (SC_HANDLE)ERROR_INVALID_HANDLE) {
-		do {
-			//创建驱动所对应的服务
-			hServiceDDK = CreateService(this->hSCManager,
-				this->driverName, //驱动程序的在注册表中的名字  
-				this->driverName, // 注册表驱动程序的 DisplayName 值  
-				SERVICE_ALL_ACCESS, // 加载驱动程序的访问权限  
-				SERVICE_KERNEL_DRIVER,// 表示加载的服务是驱动程序  
-				SERVICE_DEMAND_START, // 注册表驱动程序的 Start 值  
-				SERVICE_ERROR_IGNORE, // 注册表驱动程序的 ErrorControl 值  
-				this->path.c_str(), // 注册表驱动程序的 ImagePath 值  
-				NULL,  //GroupOrder HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GroupOrderList
-				NULL,
-				NULL,
-				NULL,
-				NULL);
-			dwRtn = GetLastError();
-			if (dwRtn == 0) {
-				break;
-			}
-#ifdef _DEBUG
-			printf("创建服务错误![%d]\n", dwRtn);
-#endif
-			//判断服务是否失败
-			if (hServiceDDK == NULL || hServiceDDK == INVALID_HANDLE_VALUE) {
-				if (dwRtn == ERROR_SERVICE_EXISTS && errNo < 5) {
-					errNo++;
-					hServiceDDK = this->open();
-					break;
-				}
-				if (dwRtn == ERROR_IO_PENDING && errNo < 5) {//如果服务创建需要等待，那么就等15秒
-					errNo++;
-					Sleep(3000);
-					continue;
-				}
-				if (dwRtn != ERROR_IO_PENDING && dwRtn != ERROR_SERVICE_EXISTS) {
-					return this;
-				}
-				else {
-					// _DebugPrint("创建服务错误!", dwRtn);
-					this->stepCode = 2;
-					this->errCode = dwRtn;
-					break;
-				}
-			}
-			else
-				break;
-		} while (errNo < 5 && dwRtn != 0);
-		//开启此项服务
-		errNo = 0;
-
-		if (this->errCode == 0 && hServiceDDK) {
-			while (!StartService(hServiceDDK, NULL, NULL) && errNo < 5) {
-				DWORD dwRtn = GetLastError();
-				if (dwRtn == 0) {
-					break;
-				}
-#ifdef _DEBUG
-				printf("启动服务错误![%d]\n", dwRtn);
-#endif
-				if (dwRtn == ERROR_SERVICE_ALREADY_RUNNING) {
-					dwRtn = 0;
-					break;
-				}
-				if ((dwRtn == ERROR_IO_PENDING) && errNo < 5) {//如果服务创建需要等待，那么就等15秒
-					errNo++;
-					Sleep(3000);
-					continue;
-				}
-				else {
-					// _DebugPrint("启动服务错误!", dwRtn);
-					this->stepCode = 3;
-					this->errCode = dwRtn;
-					break;
-				}
-			}
-		}
-		this->device = hServiceDDK;
+	if (this->hSCManager && this->hSCManager != (SC_HANDLE)ERROR_INVALID_HANDLE) {
+		
+		if (this->create() == 0)
+			this->start();
 	}
 	this->loadStatus = 4;
 	return this;
@@ -220,11 +256,37 @@ driver_loader* driver_loader::wait() {
 	}
 	return this;
 }
-driver_loader* driver_loader::unload() {
+
+DWORD driver_loader::remove() {
+	DWORD dwRtn = 0;
+	DWORD errNo = 0;
+	while (!DeleteService(this->device) && errNo < 5) {
+		dwRtn = GetLastError();
+		if (dwRtn == 0) {
+			break;
+		}
+#ifdef _DEBUG
+		printf("删除服务错误![%d]\n", dwRtn);
+#endif
+		if (dwRtn == ERROR_IO_PENDING) {//如果服务创建需要等待，那么就等15秒
+			errNo++;
+			Sleep(3000);
+			continue;
+		}
+		else {
+			// _DebugPrint("删除服务错误!", dwRtn);
+			this->stepCode = 5;
+			this->errCode = dwRtn;
+			break;
+		}
+	}
+	return dwRtn;
+}
+
+DWORD driver_loader::stop() {
 	SERVICE_STATUS SvrSta;
 	DWORD dwRtn = 0;
 	DWORD errNo = 0;
-	this->device = this->open();
 
 	while (!ControlService(this->device, SERVICE_CONTROL_STOP, &SvrSta) && errNo < 5) {
 		dwRtn = GetLastError();
@@ -246,32 +308,21 @@ driver_loader* driver_loader::unload() {
 			break;
 		}
 	}
+	return dwRtn;
+}
 
-	while (!DeleteService(this->device) && errNo < 5) {
-		dwRtn = GetLastError();
-		if (dwRtn == 0) {
-			break;
-		}
-#ifdef _DEBUG
-		printf("删除服务错误![%d]\n", dwRtn);
-#endif
-		if (dwRtn == ERROR_IO_PENDING) {//如果服务创建需要等待，那么就等15秒
-			errNo++;
-			Sleep(3000);
-			continue;
-		}
-		else {
-			// _DebugPrint("删除服务错误!", dwRtn);
-			this->stepCode = 5;
-			this->errCode = dwRtn;
-			break;
-		}
-	}
-	this->closeFile();
+driver_loader* driver_loader::unload() {
+	this->device = this->open();
+
+	this->stop();
+	this->remove();
 	this->close();
+	this->closeFile();
 
 	return this;
 }
+
+
 void driver_loader::closeFile() {
 	if (this->handle && this->handle != (HANDLE)ERROR_INVALID_HANDLE)
 		CloseHandle(this->handle);
@@ -293,6 +344,11 @@ HANDLE driver_loader::createFile() {
 	char tempDriverName[512];
 	strcpy_s(tempDriverName, "\\\\.\\");
 	strcat_s(tempDriverName, this->driverName);
+
+#ifdef _DEBUG
+	printf("创建文件:%s\n", tempDriverName);
+#endif
+
 	do {
 		_handle = CreateFile(tempDriverName, GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_SYSTEM, 0);
 		if (_handle == INVALID_HANDLE_VALUE) {
@@ -326,11 +382,7 @@ DWORD driver_loader::send(DWORD controlCode, char* inBuff, DWORD inSize, char* o
 	DWORD rLength = 0;
 	this->handle = this->createFile();
 	BOOL cR = FALSE;
-	/*
-	char szText[250];
-	sprintf_s(szText, "句柄:%p 错误号:%d\n", this->handle, this->errCode);
-	MessageBox(NULL, szText, "提示", 64);
-	*/
+
 	while (this->errCode == 0 && !cR && errNo < 5) {
 		cR = DeviceIoControl(this->handle,
 			controlCode,  // 功能号   

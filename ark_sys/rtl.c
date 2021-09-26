@@ -78,9 +78,8 @@ int _sprintf(char* str, size_t size, const char* format, ...) {
 	va_list va;
 	va_start(va, format);
 #ifdef WIN_KERNEL
-	// NTSTATUS s = RtlStringCchVPrintfA(str, size, format, va);
-	// int r = NT_SUCCESS(s) ? size : -1;
-	int r = 0;
+	NTSTATUS s = RtlStringCchPrintfA(str, size, format, va);
+	int r = NT_SUCCESS(s) ? (int)size : -1;
 #else
 	int r = vsnprintf(str, size, format, va);
 #endif
@@ -219,6 +218,8 @@ unsigned __int32 _atoui(const char* str) {
 	return flag * result;
 }
 
+#ifndef WIN_KERNEL
+
 #ifdef _WIN64
 
 char* g_itoa(__int64 num, int radix) {
@@ -230,11 +231,7 @@ char* g_itoa(__int32 num, int radix) {
 	unsigned __int32 unum; /* 中间变量 */
 #endif
 
-#ifdef WIN_KERNEL
-	KFLOATING_SAVE sFloat = { 0 };
-	KeSaveFloatingPointState(&sFloat);
-#endif
-	char* str = _malloc(60);
+	char* str = (char *)_malloc(60);
 	memset(str, 0, 60);
 	/* 索引表 */
 	char index[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -264,9 +261,7 @@ char* g_itoa(__int32 num, int radix) {
 		str[j] = str[i - j - 1];
 		str[i - j - 1] = temp;
 	}
-#ifdef WIN_KERNEL
-	KeRestoreFloatingPointState(&sFloat);
-#endif
+
 	return str;
 }
 
@@ -282,11 +277,7 @@ char* g_uitoa(unsigned __int32 num, int radix) {
 
 #endif
 
-#ifdef WIN_KERNEL
-	KFLOATING_SAVE sFloat = { 0 };
-	KeSaveFloatingPointState(&sFloat);
-#endif
-	char* str = _malloc(60);
+	char* str = (char *)_malloc(60);
 	/* 索引表 */
 	char index[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	int i = 0, j, k;
@@ -309,12 +300,9 @@ char* g_uitoa(unsigned __int32 num, int radix) {
 		str[j] = str[i - j - 1];
 		str[i - j - 1] = temp;
 	}
-#ifdef WIN_KERNEL
-	KeRestoreFloatingPointState(&sFloat);
-#endif
+
 	return str;
 }
-
 
 double _atof(const char* s)//字符型转浮点型
 {
@@ -353,3 +341,4 @@ double _atof(const char* s)//字符型转浮点型
 		d = -1 * (n + m / k);
 	return d;
 }
+#endif

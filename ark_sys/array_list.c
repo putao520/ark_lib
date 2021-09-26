@@ -111,7 +111,7 @@ void* insert_ex_list_node(void* handle, void* data, void* node) {
 	newNode->next = NULL;
 	// newNode->backup1 = 0xeeeeeeee;
 	// newNode->backup1 = 0xaaaaaaaa;
-	insert_node(root, node, newNode);
+	insert_node(root, (LIST_NODE*)node, newNode);
 	return newNode;
 }
 
@@ -129,7 +129,7 @@ void* insert_ex_last_list_node(void* handle, void* data, void* node) {
 	newNode->next = NULL;
 	// newNode->backup1 = 0xeeeeeeee;
 	// newNode->backup1 = 0xaaaaaaaa;
-	insert_last_node(root, node, newNode);
+	insert_last_node(root, (LIST_NODE*)node, newNode);
 
 	return newNode;
 }
@@ -151,7 +151,7 @@ void* push_list_node(void* handle, void* node) {
 	// lock(&root->locker);
 	node = reset_node_list(node);
 
-	insert_node(root, NULL, node);
+	insert_node(root, NULL, (LIST_NODE*)node);
 	// unlock(&root->locker);
 	return node;
 }
@@ -197,7 +197,7 @@ static int compare(void* data1, void* data2, unsigned int len) {
 		return (int)(d1 - d2);
 	}
 	default: {
-		int k1len = _strlen(data1, 255), k2len = _strlen(data2, 255);
+		int k1len = _strlen((char *)data1, 255), k2len = _strlen((char *)data2, 255);
 		return k1len == k2len ? memcmp(data1, data2, k1len) : k1len - k2len;
 	}
 	}
@@ -214,7 +214,7 @@ int del_list_node(void* handle, void* data) {
 		node = node->next) {
 		// 发现值相等的节点
 		if (compare((char*)data, (char*)node->data, root->dataSize) == 0) {
-			node = remove_list_node(handle, node);
+			node = (LIST_NODE*)remove_list_node(handle, node);
 		}
 	}
 	// unlock(&root->locker);
@@ -278,7 +278,7 @@ void* remove_list_node(void* handle, void* node) {
 	if (!root)
 		return NULL;
 
-	LIST_NODE* nextNode = pop_next_list_node(handle, node);
+	LIST_NODE* nextNode = (LIST_NODE*)pop_next_list_node(handle, node);
 
 	if (root && root->remove_cb && node) {
 		root->remove_cb(data_list_node(node));
@@ -297,7 +297,7 @@ void* removeImpl_list_node(void* handle, void* node) {
 	if (!root)
 		return NULL;
 
-	LIST_NODE* nextNode = pop_next_list_node(handle, node);
+	LIST_NODE* nextNode = (LIST_NODE*)pop_next_list_node(handle, node);
 
 	_free(node);
 

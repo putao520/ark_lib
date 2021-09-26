@@ -23,7 +23,7 @@ bool detectTextEncoding(const char* data, size_t len, char** detected)
     if (status != U_ZERO_ERROR)
         return false;
 
-    ucsdet_setText(csd, data, len, &status);
+    ucsdet_setText(csd, data, (int32_t)len, &status);
     if (status != U_ZERO_ERROR)
         return false;
 
@@ -86,7 +86,7 @@ char* TextEncode::utf8(char * str) {
     if (detectTextEncoding(buffer, size, &detected)) {
         target = new char[size * 2];
         memset(target, 0, size * 2);
-        if (convert("UTF-8", detected, target, size * 2, buffer, size) != U_ZERO_ERROR) {
+        if (convert("UTF-8", detected, target, (int32_t)(size * 2), buffer, (int32_t)size) != U_ZERO_ERROR) {
             delete[] target;
             target = str;
         }

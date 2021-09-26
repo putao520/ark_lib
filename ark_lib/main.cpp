@@ -4,20 +4,14 @@
 #include <iostream>
 #include <include/libplatform/libplatform.h>
 #include <include/v8.h>
-#include "v8vm.h"
-#include <chrono>
-#include <thread>
+#include "test.h"
 
-using namespace v8;
-using namespace std;
+
 int main(int argc, char* argv[])
 {
-	v8vm vm;
-	auto r = vm.load("p.js").exec<string>();
-	printf("%s\n", r.c_str());
+	load_driver();
 
-    std::cout << "Hello World!\n";
-	this_thread::sleep_for(std::chrono::seconds(3000));
+	system("pause");
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

@@ -1,11 +1,11 @@
 #include "Driver.h"
-#include "../ark_actor/actor_server.h"
+#include "actor_server.h"
 
 UNICODE_STRING DEVICE_NAME, LINK_NAME;
 actor_server* global_actor_server = NULL;
 VOID DriverUnload(PDRIVER_OBJECT pDriverObj) {
 #ifdef _DEBUG
-	printf("DEVICE_QUIT\n");
+	_printf("DEVICE_QUIT\n");
 #endif // _DEBUG
 	IoDeleteSymbolicLink(&LINK_NAME);
 	IoDeleteDevice(pDriverObj->DeviceObject);
@@ -42,7 +42,7 @@ NTSTATUS DispatchIoctl(PDEVICE_OBJECT pDevObj, PIRP pIrp) {
 		//在这里加入接口
 	case IOCTL_IO_TEST:
 #ifdef _DEBUG
-		printf("DEVICE_CONTROL_TEST\n");
+		_printf("DEVICE_CONTROL_TEST\n");
 #endif
 		status = STATUS_SUCCESS;
 		break;
@@ -77,7 +77,7 @@ NTSTATUS DispatchIoctl(PDEVICE_OBJECT pDevObj, PIRP pIrp) {
 	pIrp->IoStatus.Status = status;
 	IoCompleteRequest(pIrp, IO_NO_INCREMENT);
 #ifdef _DEBUG
-	printf("DEVICE_CONTROL\n");
+	_printf("DEVICE_CONTROL\n");
 #endif
 	return status;
 }
@@ -89,8 +89,8 @@ VOID InitDriverName(UNICODE_STRING* _DEVICE_NAME, UNICODE_STRING* _LINK_NAME, co
 	RtlAppendUnicodeToString(_LINK_NAME, driver_name);
 
 #ifdef _DEBUG
-	printf("DEVICE_NAME:%ws\n", _DEVICE_NAME->Buffer);
-	printf("LINK_NAME:%ws\n", _LINK_NAME->Buffer);
+	_printf("DEVICE_NAME:%ws\n", _DEVICE_NAME->Buffer);
+	_printf("LINK_NAME:%ws\n", _LINK_NAME->Buffer);
 #endif
 }
 
@@ -108,7 +108,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT pDriverObj, PUNICODE_STRING pRegistryString)
 	pDriverObj->DriverUnload = DriverUnload;
 
 	//载入设备命名字符串
-	InitDriverName(&DEVICE_NAME, &LINK_NAME, L"sys_name");
+	InitDriverName(&DEVICE_NAME, &LINK_NAME, L"ArkSys");
 
 	//创建一个设备
 	status = IoCreateDevice(pDriverObj, 0, &DEVICE_NAME, FILE_DEVICE_UNKNOWN, 0, FALSE, &pDevObj);
@@ -121,9 +121,9 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT pDriverObj, PUNICODE_STRING pRegistryString)
 	}
 	pDriverObj->DeviceObject = pDevObj;
 #ifdef _DEBUG
-	printf("Code:%ws\n", DEVICE_NAME.Buffer);
-	printf("DEVICE_ENTRY\n");
-	printf("DEVICE_INFO:%ws\n", pDriverObj->HardwareDatabase->Buffer);
+	_printf("Code:%ws\n", DEVICE_NAME.Buffer);
+	_printf("DEVICE_ENTRY\n");
+	_printf("DEVICE_INFO:%ws\n", pDriverObj->HardwareDatabase->Buffer);
 #endif
 	return STATUS_SUCCESS;
 	// VMProtectEnd();

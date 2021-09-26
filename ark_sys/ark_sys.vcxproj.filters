@@ -20,31 +20,64 @@
     <Filter Include="Source Files\actor_server">
       <UniqueIdentifier>{165df614-4f11-4536-a749-7b3c76ca160c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\until">
+      <UniqueIdentifier>{6f28e139-91e0-4b62-b542-114fd7b24a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\until\array_list">
+      <UniqueIdentifier>{ad5e4c73-b5c9-40b5-9086-7405873ad2f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\until\rtl">
+      <UniqueIdentifier>{4b86d598-cfef-4a1f-847b-86ce826084cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\until\fix">
+      <UniqueIdentifier>{580b9e06-cf5f-4da2-8b0c-ce86a23a9c84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Driver.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ark_actor\actor_server.c">
+    <ClCompile Include="actor_server.c">
       <Filter>Source Files\actor_server</Filter>
+    </ClCompile>
+    <ClCompile Include="array_list.c">
+      <Filter>Source Files\until\array_list</Filter>
+    </ClCompile>
+    <ClCompile Include="gs_array.c">
+      <Filter>Source Files\until\array_list</Filter>
+    </ClCompile>
+    <ClCompile Include="rtl.c">
+      <Filter>Source Files\until\rtl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Driver.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ark_actor\actor_common.h">
-      <Filter>Source Files\actor_server</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ark_actor\actor_server.h">
-      <Filter>Source Files\actor_server</Filter>
-    </ClInclude>
     <ClInclude Include="..\ark_actor\ark_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="actor_server.h">
+      <Filter>Source Files\actor_server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ark_actor\actor_common.h">
+      <Filter>Source Files\actor_server</Filter>
+    </ClInclude>
+    <ClInclude Include="array_list.h">
+      <Filter>Source Files\until\array_list</Filter>
+    </ClInclude>
+    <ClInclude Include="gs_array.h">
+      <Filter>Source Files\until\array_list</Filter>
+    </ClInclude>
+    <ClInclude Include="rtl.h">
+      <Filter>Source Files\until\rtl</Filter>
+    </ClInclude>
+    <ClInclude Include="stdbool.h">
+      <Filter>Source Files\until\fix</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="..\ark_actor\actor_server_x64.asm">
+    <MASM Include="actor_server_x64.asm">
       <Filter>Source Files\actor_server</Filter>
     </MASM>
   </ItemGroup>

@@ -27,6 +27,11 @@ private:
 	HANDLE createFile();
 	void closeFile();
 
+	DWORD create();
+	DWORD start();
+	DWORD remove();
+	DWORD stop();
+
 	void close();
 public:
 	// 构造函数,输入sys文件uri
