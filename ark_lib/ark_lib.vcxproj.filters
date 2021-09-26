@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\v8_vm">
+      <UniqueIdentifier>{c283d182-9c4e-4a37-a13c-9a7b7e70fc38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until">
+      <UniqueIdentifier>{6ab32057-5e95-416d-9d5a-f3fecbe670f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8time">
+      <UniqueIdentifier>{026beda3-4e72-47a0-8f29-b18935ff52cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8inject">
+      <UniqueIdentifier>{01035cd4-0886-43cf-bf84-18b827f22358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8context">
+      <UniqueIdentifier>{9e1fbdaf-b8af-4c63-9a4a-95febf48f982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8print">
+      <UniqueIdentifier>{24826826-01a5-4d38-9602-2f559f3ec5f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\queue_ring">
+      <UniqueIdentifier>{000220d9-bc22-4c76-a2a5-a3f255ecdd99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8time\setTimeout">
+      <UniqueIdentifier>{8b2c0254-06fd-4dcd-afe4-7cf48eb53f17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8time\interval">
+      <UniqueIdentifier>{0396157f-021f-4738-8ad1-8c2c264db8d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\gs_driver">
+      <UniqueIdentifier>{8e3c6389-f6e0-4e1f-807b-b3fdd41b0c12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\gs_driver\loader">
+      <UniqueIdentifier>{5dfbf829-a8ba-4587-a38a-78612442ef4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\gs_driver\controller">
+      <UniqueIdentifier>{eca5719e-4401-483b-870b-647642bf070f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\file_until">
+      <UniqueIdentifier>{9f137795-dd2b-499e-89d5-b1f285f916ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\text_encode">
+      <UniqueIdentifier>{872c47ba-4e50-4647-979a-e80df710f1c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\process_adjust">
+      <UniqueIdentifier>{d7edd953-8d6c-468b-b0d8-a80cff13f06c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\gs_driver\actor_client">
+      <UniqueIdentifier>{e84d3c93-42fe-4c39-b212-1bb49b7027f9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="v8vm.cpp">
+      <Filter>源文件\v8_vm</Filter>
+    </ClCompile>
+    <ClCompile Include="v8env.cpp">
+      <Filter>源文件\v8_vm</Filter>
+    </ClCompile>
+    <ClCompile Include="v8inject.cpp">
+      <Filter>源文件\v8_vm\v8inject</Filter>
+    </ClCompile>
+    <ClCompile Include="v8context.cpp">
+      <Filter>源文件\v8_vm\v8context</Filter>
+    </ClCompile>
+    <ClCompile Include="v8print.cpp">
+      <Filter>源文件\v8_vm\v8print</Filter>
+    </ClCompile>
+    <ClCompile Include="queue_ring.cpp">
+      <Filter>源文件\until\queue_ring</Filter>
+    </ClCompile>
+    <ClCompile Include="queue_ring_exception.cpp">
+      <Filter>源文件\until\queue_ring</Filter>
+    </ClCompile>
+    <ClCompile Include="v8time.cpp">
+      <Filter>源文件\v8_vm\v8time\setTimeout</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeoutTask.cpp">
+      <Filter>源文件\v8_vm\v8time\setTimeout</Filter>
+    </ClCompile>
+    <ClCompile Include="v8interval.cpp">
+      <Filter>源文件\v8_vm\v8time\interval</Filter>
+    </ClCompile>
+    <ClCompile Include="IntervalTask.cpp">
+      <Filter>源文件\v8_vm\v8time\interval</Filter>
+    </ClCompile>
+    <ClCompile Include="driver_loader.cpp">
+      <Filter>源文件\gs_driver\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="file_until.cpp">
+      <Filter>源文件\until\file_until</Filter>
+    </ClCompile>
+    <ClCompile Include="text_encode.cpp">
+      <Filter>源文件\until\text_encode</Filter>
+    </ClCompile>
+    <ClCompile Include="process_adjust.cpp">
+      <Filter>源文件\until\process_adjust</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ark_actor\actor_client.cpp">
+      <Filter>源文件\gs_driver\actor_client</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="v8vm.h">
+      <Filter>源文件\v8_vm</Filter>
+    </ClInclude>
+    <ClInclude Include="v8env.h">
+      <Filter>源文件\v8_vm</Filter>
+    </ClInclude>
+    <ClInclude Include="v8inject.h">
+      <Filter>源文件\v8_vm\v8inject</Filter>
+    </ClInclude>
+    <ClInclude Include="v8context.h">
+      <Filter>源文件\v8_vm\v8context</Filter>
+    </ClInclude>
+    <ClInclude Include="v8print.h">
+      <Filter>源文件\v8_vm\v8print</Filter>
+    </ClInclude>
+    <ClInclude Include="queue_ring.h">
+      <Filter>源文件\until\queue_ring</Filter>
+    </ClInclude>
+    <ClInclude Include="queue_ring_exception.h">
+      <Filter>源文件\until\queue_ring</Filter>
+    </ClInclude>
+    <ClInclude Include="v8time.h">
+      <Filter>源文件\v8_vm\v8time\setTimeout</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeoutTask.h">
+      <Filter>源文件\v8_vm\v8time\setTimeout</Filter>
+    </ClInclude>
+    <ClInclude Include="v8interval.h">
+      <Filter>源文件\v8_vm\v8time\interval</Filter>
+    </ClInclude>
+    <ClInclude Include="IntervalTask.h">
+      <Filter>源文件\v8_vm\v8time\interval</Filter>
+    </ClInclude>
+    <ClInclude Include="driver_loader.h">
+      <Filter>源文件\gs_driver\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="file_until.h">
+      <Filter>源文件\until\file_until</Filter>
+    </ClInclude>
+    <ClInclude Include="text_encode.h">
+      <Filter>源文件\until\text_encode</Filter>
+    </ClInclude>
+    <ClInclude Include="process_adjust.h">
+      <Filter>源文件\until\process_adjust</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ark_actor\actor_client.h">
+      <Filter>源文件\gs_driver\actor_client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ark_actor\actor_common.h">
+      <Filter>源文件\gs_driver\actor_client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ark_actor\ark_common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="build.txt">
+      <Filter>源文件</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
