@@ -53,11 +53,10 @@ void driver_loader::SCM() {
 }
 
 SC_HANDLE driver_loader::openOrCreate() {
+	DWORD dwRtn = 0, dwRtn_ = 0;
+
 	if (this->device)
 		return this->device;
-	int errNo = 0;
-	DWORD dwRtn = 0, dwRtn_ = 0;
-	SC_HANDLE hServiceDDK = NULL;
 
 	SC_HANDLE hSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 	if (SC_HANDLE_ERROR(hSCManager)) {
@@ -66,7 +65,7 @@ SC_HANDLE driver_loader::openOrCreate() {
 			MessageBox(NULL, "请使用[管理员]权限运行本程序!", "提示", 64);
 			ExitProcess(-1);
 		}
-		
+		return 0;
 	}
 
 WorkPiper:
@@ -90,7 +89,8 @@ WorkPiper:
 				NULL,
 				NULL,
 				NULL);
-			this->errCode = dwRtn_ = GetLastError();
+			if( SC_HANDLE_ERROR(_device ))
+				this->errCode = dwRtn = dwRtn_ = GetLastError();
 #ifdef _DEBUG
 			printf("创建服务错误![%d]\n", dwRtn_);
 #endif
@@ -102,8 +102,7 @@ WorkPiper:
 		}
 	}
 	
-	while (CloseServiceHandle(hSCManager));
-		
+	CloseServiceHandle(hSCManager);
 	return _device;
 }
 
@@ -113,11 +112,9 @@ DWORD driver_loader::getError() {
 
 
 DWORD driver_loader::start() {
+	DWORD dwRtn = 0;
 	if (!this->device)
 		return ERROR_SERVICE_DOES_NOT_EXIST;
-
-	DWORD dwRtn = 0;
-
 WorkPiper:
 	if (!StartService(this->device, NULL, NULL)) {
 		this->errCode = dwRtn = GetLastError();
@@ -150,12 +147,13 @@ driver_loader* driver_loader::load() {
 	printf("CreateService File:%s\n", this->path.c_str());
 	printf("CreateService Name:%s\n", this->driverName);
 #endif
-	SC_HANDLE _device = this->openOrCreate();
-	if (!SC_HANDLE_ERROR(_device)) {
-		if (this->start() == 0) {
-			this->device = _device;
+	this->device = this->openOrCreate();
+#ifdef _DEBUG
+	printf("device:%p\n", this->device);
+#endif
+	if (!SC_HANDLE_ERROR(this->device)) {
+		if (this->start() == 0) 
 			this->loadStatus = 1;
-		}
 	}
 			
 	return this;
@@ -227,7 +225,7 @@ DWORD driver_loader::send(DWORD controlCode, char* inBuff, DWORD inSize, char* o
 	sprintf_s(tempDriverName, "\\\\.\\%s", this->driverName);
 	HANDLE handle = CreateFile(tempDriverName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, FILE_ATTRIBUTE_SYSTEM, 0);
 	if (!handle)
-		return 0;
+		return dwRtn;
 
 WorkPiper:
 	BOOL cR = DeviceIoControl(handle,
@@ -248,8 +246,7 @@ WorkPiper:
 			goto WorkPiper;
 		}
 	}
-
-	while (CloseHandle(handle));
+	CloseHandle(handle);
 	return cR ? rLength : 0;
 }
 
