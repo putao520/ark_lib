@@ -137,6 +137,8 @@ actor_server* NewActorServer(HANDLE eHandle) {
 		// ObDereferenceObject(self->event_object);
 	}
 
+	self->internal_services = NewInternalServices();
+
 	actor_cnt++;
 
 	return self;
@@ -145,8 +147,6 @@ actor_server* NewActorServer(HANDLE eHandle) {
 void DeleteActorServer(actor_server* self) {
 	if (!self)
 		return;
-
-	__debugbreak();
 
 	self->status = REMOVEING;
 	KeSetEvent(self->event_object, IO_NO_INCREMENT, FALSE);
@@ -162,5 +162,8 @@ void DeleteActorServer(actor_server* self) {
 	if (self->event_object)
 		ObDereferenceObject(self->event_object);
 		
+	if (self->internal_services)
+		DelInternalServices(self->internal_services);
+
 	_free(self);
 }

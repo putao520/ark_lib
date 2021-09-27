@@ -194,6 +194,7 @@
   <ItemGroup>
     <ClInclude Include="..\ark_actor\actor_common.h" />
     <ClInclude Include="..\ark_actor\ark_common.h" />
+    <ClInclude Include="..\ark_actor\internal.h" />
     <ClInclude Include="actor_client.h" />
     <ClInclude Include="process_adjust.h" />
     <ClInclude Include="driver_loader.h" />

@@ -32,6 +32,15 @@
     <Filter Include="Source Files\until\fix">
       <UniqueIdentifier>{580b9e06-cf5f-4da2-8b0c-ce86a23a9c84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\internal">
+      <UniqueIdentifier>{e675987f-f1d5-4603-a04f-c9e1da3f9814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\internal\kernel">
+      <UniqueIdentifier>{d855929a-283c-4a0c-9001-f34df7682391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\internal\process">
+      <UniqueIdentifier>{a1858dc6-51bf-45f4-b4ec-3a3a184bf906}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Driver.c">
@@ -48,6 +57,12 @@
     </ClCompile>
     <ClCompile Include="rtl.c">
       <Filter>Source Files\until\rtl</Filter>
+    </ClCompile>
+    <ClCompile Include="kernel.c">
+      <Filter>Source Files\internal\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ark_actor\internal.c">
+      <Filter>Source Files\internal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +89,12 @@
     </ClInclude>
     <ClInclude Include="stdbool.h">
       <Filter>Source Files\until\fix</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel.h">
+      <Filter>Source Files\internal\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ark_actor\internal.h">
+      <Filter>Source Files\internal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

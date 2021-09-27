@@ -192,19 +192,23 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ark_actor\internal.c" />
     <ClCompile Include="actor_server.c" />
     <ClCompile Include="array_list.c" />
     <ClCompile Include="Driver.c" />
     <ClCompile Include="gs_array.c" />
+    <ClCompile Include="kernel.c" />
     <ClCompile Include="rtl.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ark_actor\actor_common.h" />
     <ClInclude Include="..\ark_actor\ark_common.h" />
+    <ClInclude Include="..\ark_actor\internal.h" />
     <ClInclude Include="actor_server.h" />
     <ClInclude Include="array_list.h" />
     <ClInclude Include="Driver.h" />
     <ClInclude Include="gs_array.h" />
+    <ClInclude Include="kernel.h" />
     <ClInclude Include="rtl.h" />
     <ClInclude Include="stdbool.h" />
   </ItemGroup>

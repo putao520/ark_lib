@@ -5,6 +5,7 @@
 #include <Windows.h>
 #endif
 
+#include "internal.h"
 #include "stdlib.h"
 #include "../ark_sys/gs_array.h"
 
@@ -51,6 +52,7 @@ typedef struct actor_server {
 #else
 	void* event_object;
 #endif
+	InternalServices* internal_services;	// 内置服务表
 }actor_server;
 
 EXTERN_C_END

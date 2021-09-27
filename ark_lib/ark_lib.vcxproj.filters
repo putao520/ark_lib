@@ -64,6 +64,9 @@
     <Filter Include="源文件\test">
       <UniqueIdentifier>{e7461e5e-0ff7-43b0-9b98-e9e74652ebb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\gs_driver\internal">
+      <UniqueIdentifier>{9dadb043-624b-4f9c-8bd2-d9f381b5b668}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="test.h">
       <Filter>源文件\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ark_actor\internal.h">
+      <Filter>源文件\gs_driver\internal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
