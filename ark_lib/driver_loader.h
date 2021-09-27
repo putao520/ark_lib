@@ -9,25 +9,21 @@ private:
 	// 文件地址,如果是http开头的path,尝试自动下载
 	string path;
 	const char* driverName = NULL;
+
 	// 与驱动通讯是否使用加密模式
 	bool isSecTranport = false;
-	// 驱动加载状态 0:未加载，1：下载中，2：加载中 4：结束
+
+	// 驱动加载状态 0:未加载，1：已加载
 	uint32_t loadStatus = 0;
 
+	// 驱动句柄
 	SC_HANDLE device = NULL;
-	HANDLE handle = NULL;
-	SC_HANDLE hSCManager = NULL;
+	// 文件句柄
 	DWORD errCode = 0;
 
-	DWORD stepCode = 0;
+	void SCM();
+	SC_HANDLE openOrCreate();
 
-	SC_HANDLE _SCM();
-	SC_HANDLE open();
-
-	HANDLE createFile();
-	void closeFile();
-
-	DWORD create();
 	DWORD start();
 	DWORD remove();
 	DWORD stop();
@@ -40,16 +36,14 @@ public:
 	~driver_loader();
 	driver_loader* InitDevName(const char* lpszDriverName);
 	driver_loader* setUri(const char* _uri);
+	driver_loader* wait();
 	// 清除上下文(仅当下载时有效),删除下载文件
-	void clearContext();
-	driver_loader* load();
 	string getPath();
 	string getDevName();
-	BOOL hasError();
 	DWORD getError();
-	DWORD getStep();
-	DWORD send(DWORD controlCode, char* inBuff, DWORD inSize, char* outBuff, DWORD outSize);
+
 	// 等待结束
-	driver_loader* wait();
+	driver_loader* load();
+	DWORD send(DWORD controlCode, char* inBuff, DWORD inSize, char* outBuff, DWORD outSize);
 	driver_loader* unload();
 };

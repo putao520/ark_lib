@@ -16,6 +16,9 @@ actor_client::~actor_client() {
 actor_client::actor_client(driver_loader* dHandle): device(dHandle), task(nullptr){
 	if (!eHandle) {
 		eHandle = CreateEvent(nullptr, FALSE, FALSE, nullptr);
+#ifdef _DEBUG
+		printf("Events:%p\n", eHandle);
+#endif
 		dHandle->send(IOCTL_IO_ACTOR_NEW, (char*)&eHandle, sizeof(HANDLE), nullptr, 0);
 	}
 }

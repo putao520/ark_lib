@@ -109,8 +109,6 @@ void* insert_ex_list_node(void* handle, void* data, void* node) {
 	newNode->data = data;
 	newNode->prev = NULL;
 	newNode->next = NULL;
-	// newNode->backup1 = 0xeeeeeeee;
-	// newNode->backup1 = 0xaaaaaaaa;
 	insert_node(root, (LIST_NODE*)node, newNode);
 	return newNode;
 }

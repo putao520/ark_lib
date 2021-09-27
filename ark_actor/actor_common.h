@@ -14,7 +14,8 @@ typedef enum TASK_RUN_STATUS {
 	IDLE,				// 空闲中
 	RUNNING,			// 运行中
 	RETURNNING,			// 取值中
-	REMOVEING = 404		// 删除中（移除任务块时，需要判断 self->task_queue 是否为 remove 对象）
+	REMOVEING = 404,	// 删除中（移除任务块时，需要判断 self->task_queue 是否为 remove 对象）
+	WAITTINGFREE		// 等待卸载
 }TASK_RUN_STATUS;
 
 typedef struct task_block_parameter{

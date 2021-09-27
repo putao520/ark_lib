@@ -23,6 +23,7 @@ void load_driver() {
 	actor->connect();
 
 	// 调用内核方法
-
+	system("pause");
+	loader->unload();
 	delete loader;
 }

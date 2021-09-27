@@ -1,4 +1,5 @@
 #include "actor_server.h"
+#include "rtl.h"
 
 unsigned int actor_cnt = 0;
 
@@ -45,6 +46,9 @@ uintptr_t CallActorService(task_block* pTask) {
 }
 
 VOID ACTOR_SERVER_ROUTINE(actor_server* self) {
+
+	__debugbreak();
+
 	unsigned int idle_cnt = 0;
 
 	if (!self)
@@ -56,17 +60,19 @@ VOID ACTOR_SERVER_ROUTINE(actor_server* self) {
 
 	void* list_array = list->handle;
 
-	self->status = RUNNING;
-
 	// wait event 等待事件触发(触发事件 alerted 停止服务)
 	PRKEVENT pkEvent = self->event_object;
 
 	while ( !NT_ERROR(KeWaitForSingleObject(pkEvent, Executive, KernelMode, FALSE, NULL)) ) {
-
+		if (self->status == REMOVEING)
+			break;
+		
 		if (idle_cnt > 10000) {
 			self->status = IDLE;
 			KeClearEvent(pkEvent);
 		}
+		else
+			self->status = RUNNING;
 
 		void* node = list->first(list_array);
 		while (node) {
@@ -89,12 +95,13 @@ VOID ACTOR_SERVER_ROUTINE(actor_server* self) {
 		}
 	}
 
+	self->status = WAITTINGFREE;
 	PsTerminateSystemThread(STATUS_SUCCESS);
 }
 
 actor_server* serve_fn(actor_server* self) {
 	HANDLE hThread = NULL;
-	PsCreateSystemThread(&hThread, 0, NULL, NULL, NULL, ACTOR_SERVER_ROUTINE, self);
+	PsCreateSystemThread(&hThread, 0, NULL, ZwCurrentProcess(), NULL, ACTOR_SERVER_ROUTINE, self);
 	ZwClose(hThread);
 	return self;
 }
@@ -116,17 +123,20 @@ actor_server* NewActorServer(HANDLE eHandle) {
 		return self;
 
 	self->serve = IDLE;
-	self->task_queue = NewArray();
+#ifdef _WIN64
+	self->task_queue = NewArrayU64();
+#else
+	self->task_queue = NewArrayU32();
+#endif
 
 	self->accpet = accpet_fn;
 	self->serve = serve_fn;
 
 	self->event_handle = eHandle;
-	if (NT_SUCCESS(ObReferenceObjectByHandle(eHandle, EVENT_MODIFY_STATE, *ExEventObjectType, KernelMode, self->event_object, NULL))) {
-		ObDereferenceObject(self->event_object);
+	if (NT_SUCCESS(ObReferenceObjectByHandle(eHandle, EVENT_ALL_ACCESS, *ExEventObjectType, KernelMode, &self->event_object, NULL))) {
+		// ObDereferenceObject(self->event_object);
 	}
-	
-	self->event_object = _malloc(sizeof(KEVENT));
+
 	actor_cnt++;
 
 	return self;
@@ -136,6 +146,13 @@ void DeleteActorServer(actor_server* self) {
 	if (!self)
 		return;
 
+	__debugbreak();
+
+	self->status = REMOVEING;
+	KeSetEvent(self->event_object, IO_NO_INCREMENT, FALSE);
+	while (self->status != WAITTINGFREE)
+		_Sleep(1000);
+
 	if (self->task_queue)
 		DeleteArray(self->task_queue);
 
@@ -143,7 +160,7 @@ void DeleteActorServer(actor_server* self) {
 		ZwClose(self->event_handle);
 
 	if (self->event_object)
-		_free(self->event_object);
-
+		ObDereferenceObject(self->event_object);
+		
 	_free(self);
 }
