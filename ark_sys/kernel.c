@@ -17,6 +17,15 @@ int write_internal_fn(void* buffer, void* address, int size) {
 	return -1;
 }
 
+uintptr_t alloc_internal_fn(unsigned int size) {
+	return (uintptr_t)_malloc(size);
+}
+
+void free_internal_fn(void* address) {
+	if (MmIsAddressValid(address))
+		_free(address);
+}
+
 int inline process_read_internal_impl_fn(void* eprocess, void* buffer, void* address, int size) {
 	KAPC_STATE apcState = { 0 };
 	KeStackAttachProcess(eprocess, &apcState);

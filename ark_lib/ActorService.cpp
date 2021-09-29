@@ -1,7 +1,8 @@
 #include "ActorService.h"
 #include "DriverLoaderService.h"
 
-thread_local actor_client* current_actor = NULL;
+// 改成线程变量
+actor_client* current_actor = NULL;
 actor_client* ActorService::current() {
 	if (!current_actor)
 		current_actor = actor_client::New(DriverLoaderService::current());

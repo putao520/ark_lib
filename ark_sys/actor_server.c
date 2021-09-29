@@ -2,54 +2,22 @@
 #include "rtl.h"
 
 unsigned int actor_cnt = 0;
-
-void SwapInputParameter(task_block_parameter* dst_parameter, task_block_parameter* src_parameter, uintptr_t size) {
-	for (int i = 0; i < size; i++) {
-		memcpy(dst_parameter, src_parameter, sizeof(task_block_parameter));
-		if (src_parameter[i].size ) {
-			void* buffer = _malloc(src_parameter[i].size);
-			if (buffer) {
-				memcpy(buffer, (void*)src_parameter[i].payload, src_parameter[i].size);
-			}
-			dst_parameter[i].payload = buffer;
-		}
-	}
-}
-
-void SwapOutputParameter(task_block_parameter* dst_parameter, task_block_parameter* src_parameter, uintptr_t size) {
-	for (int i = 0; i < size; i++) {
-		// 是一个输出接收参数
-		if (src_parameter[i].size && src_parameter[i].opearte == 1) {
-			memcpy((void *)dst_parameter[i].payload, (void*)src_parameter[i].payload, dst_parameter[i].size);
-		}
-	}
-}
-
 // 最多支持20个参数
 uintptr_t CallActorService(task_block* pTask) {
 	// 错误地址校验
-	if (!MmIsAddressValid(pTask->target)) {
+	if (!MmIsAddressValid((void *)pTask->target)) {
 		pTask->error = TASK_ERROR_TARGET;
 		return 0;
 	}
 
-	task_block_parameter* new_parameter = NULL;
-	task_block_parameter* parameter = pTask->parameter;
+	uintptr_t* parameter = &pTask->parameter;
 	// 设置 中断等级
-	KIRQL irql = KfRaiseIrql(pTask->interrupt_level);
+	KIRQL irql = KfRaiseIrql((KIRQL)pTask->interrupt_level);
 	// 创建内核层参数中间块
-	if (pTask->copy) {
-		new_parameter = _malloc( sizeof(task_block_parameter) * 20 );
-		if (new_parameter) {
-			SwapInputParameter(new_parameter, parameter, pTask->size);
-		}
-		parameter = new_parameter;
-	}
+
 	// 开始调用
-	uintptr_t r = CallActorServiceGen(parameter, pTask->size, (void *)pTask->target);
-	if (pTask->copy && new_parameter) {
-		SwapOutputParameter(parameter, new_parameter, pTask->size);
-	}
+	uintptr_t r = (uintptr_t)CallActorServiceGen(parameter, pTask->size, (void *)pTask->target);
+
 	KeLowerIrql(irql);
 
 	return r;

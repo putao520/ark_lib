@@ -3,6 +3,9 @@ typedef struct InternalServices{
 	void* read;
 	void* write;
 
+	void* alloc;
+	void* free;
+
 	void* process_read;
 	void* process_write;
 

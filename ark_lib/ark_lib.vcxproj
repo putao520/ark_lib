@@ -139,7 +139,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>V8_COMPRESS_POINTERS ;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -157,7 +157,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>V8_COMPRESS_POINTERS ;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -174,6 +174,7 @@
   <ItemGroup>
     <ClCompile Include="actor_client.cpp" />
     <ClCompile Include="ActorService.cpp" />
+    <ClCompile Include="debug_until.cpp" />
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="DriverLoaderService.cpp" />
     <ClCompile Include="print_until.cpp" />
@@ -190,7 +191,7 @@
     <ClCompile Include="v8env.cpp" />
     <ClCompile Include="v8inject.cpp" />
     <ClCompile Include="v8interval.cpp" />
-    <ClCompile Include="v8kernel.cpp" />
+    <ClCompile Include="v8memory.cpp" />
     <ClCompile Include="v8print.cpp" />
     <ClCompile Include="v8time.cpp" />
     <ClCompile Include="v8vm.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="..\ark_actor\internal.h" />
     <ClInclude Include="actor_client.h" />
     <ClInclude Include="ActorService.h" />
+    <ClInclude Include="debug_until.h" />
     <ClInclude Include="driver.h" />
     <ClInclude Include="DriverLoaderService.h" />
     <ClInclude Include="print_until.h" />
@@ -218,7 +220,7 @@
     <ClInclude Include="file_until.h" />
     <ClInclude Include="v8inject.h" />
     <ClInclude Include="v8interval.h" />
-    <ClInclude Include="v8kernel.h" />
+    <ClInclude Include="v8memory.h" />
     <ClInclude Include="v8print.h" />
     <ClInclude Include="v8time.h" />
     <ClInclude Include="v8vm.h" />

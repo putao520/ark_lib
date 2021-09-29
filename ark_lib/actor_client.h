@@ -4,10 +4,9 @@
 #include "../ark_actor/internal.h"
 #include "driver.h"
 
+using namespace std;
 class actor_client {
 public:
-	bool copy;
-
 	actor_client(driver_loader*);
 	~actor_client();
 
@@ -18,16 +17,21 @@ public:
 
 	actor_client* connect();	// 连接服务器
 	static actor_client* New(driver_loader*);
-	static actor_client* NewProcess(driver_loader*);
-
-	actor_client* push(void* value, unsigned int size = sizeof(uintptr_t), uintptr_t opearte = 0);
-
+	
+	actor_client* push(void* value);
+	
 	template<typename T>
-	actor_client* push(T value, uintptr_t opearte = 0){
-		unsigned int size = sizeof(T);
-		return push((void*)value, size, opearte);
+	actor_client* push(T value){
+		if constexpr (is_integral<T>::value && sizeof(T) < sizeof(uintptr_t)) {
+			char* p = nullptr;
+			p += value;
+			return push((void*)p);
+		}
+		else {
+			return push((void*)value);
+		}
 	}
-
+	
 
 private:
 	task_block* task;			// 所属任务块

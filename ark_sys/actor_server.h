@@ -23,7 +23,7 @@ typedef struct actor_server {
 	InternalServices* internal_services;	// 内置服务表
 }actor_server;
 
-void* CallActorServiceGen(task_block_parameter* parameter, uintptr_t size, void* target);
+void* CallActorServiceGen(uintptr_t* parameter, uintptr_t size, void* target);
 actor_server* NewActorServer(HANDLE eHandle);
 void DeleteActorServer(actor_server* self);
 

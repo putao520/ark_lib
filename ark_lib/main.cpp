@@ -10,7 +10,8 @@
 int main(int argc, char* argv[])
 {
 	
-	load_v8vm();
+	// load_v8vm();
+	load_driver();
 
 	system("pause");
 }

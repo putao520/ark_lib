@@ -1,9 +1,19 @@
 #include "actor_client.h"
 #include "../ark_actor/ark_common.h"
+#include <assert.h>
+
+#ifdef _DEBUG
+#include "debug_until.h"
+#endif
+
 HANDLE eHandle;
 actor_client* actor_client::connect() {
 	task = (task_block*)calloc(1, sizeof(task_block));
 	if (task) {
+
+#ifdef _DEBUG
+		__pauseDebug("actor_client::connect =>%p\n", task);
+#endif
 
 		task->internal_services = (InternalServices*)calloc(1, sizeof(InternalServices));
 
@@ -19,13 +29,14 @@ actor_client::~actor_client() {
 }
 
 actor_client::actor_client(driver_loader* dHandle): device(dHandle), 
-task(nullptr),
-copy(FALSE){
+task(nullptr){
 	if (!eHandle) {
 		eHandle = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 #ifdef _DEBUG
 		printf("Events:%p\n", eHandle);
+		__pauseDebug("Events:%p\n", eHandle);
 #endif
+
 		dHandle->send(IOCTL_IO_ACTOR_NEW, (char*)&eHandle, sizeof(HANDLE), nullptr, 0);
 	}
 	load_module = new driver();
@@ -35,23 +46,21 @@ actor_client* actor_client::New(driver_loader* dHandle) {
 	return new actor_client(dHandle);
 }
 
-actor_client* actor_client::NewProcess(driver_loader* dHandle) {
-	actor_client* self = new actor_client(dHandle);
-
-	self->copy = true;
-
-	return self;
-}
-
 InternalServices* actor_client::services() {
 	return task->internal_services;
 }
 
-actor_client* actor_client::push(void* value, unsigned int size, uintptr_t opearte) {
+actor_client* actor_client::push(void* value) {
+	
+	assert(task != nullptr);
+
+	/*
 	task_block_parameter* p = &task->parameter[task->size];
 	p->payload = (uintptr_t)value;
 	p->size = size;
-	p->opearte = opearte;
+	*/
+
+	task->parameter[task->size] = (uintptr_t)value;
 
 	task->size++;
 	return this;
@@ -63,6 +72,7 @@ uintptr_t actor_client::run(void* target, unsigned char interrupt_level) {
 	task->interrupt_level = interrupt_level;
 #ifdef _DEBUG
 	printf("Task Status £º %llu\n", task->status);
+	__pauseDebug("Task Status £º %llu\n", task->status);
 #endif
 	uintptr_t _status = task->status;
 	task->status = TASK_RUNNING;
@@ -81,6 +91,7 @@ uintptr_t actor_client::runAsRva(const char* name, void* rva, unsigned char irql
 	char* target = (char *)load_module->module(name) + (uintptr_t)rva;
 #ifdef _DEBUG
 	printf("call target:%p\n", target);
+	__pauseDebug("call target:%p\n", target);
 #endif
 	if (!target)
 		return 0;

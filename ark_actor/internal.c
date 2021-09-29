@@ -10,6 +10,9 @@ InternalServices* NewInternalServices() {
 	self->read = (void*)read_internal_fn;
 	self->write = (void*)write_internal_fn;
 
+	self->alloc = (void*)alloc_internal_fn;
+	self->free = (void*)free_internal_fn;
+
 	self->process_read = (void*)process_read_internal_fn;
 	self->process_write = (void*)process_write_internal_fn;
 

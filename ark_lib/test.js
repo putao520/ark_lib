@@ -1,21 +1,6 @@
-
-
-setTimeout(function(){
-	var a = 1;
-	print("in timer");
-},5000);
-
-
-
-var c = 0;
-var timerId = setInterval(function(){
-	c++;
-	var t = timerId;
-	print("[" + t + "]cnt:" + c);
-	if( c > 5 ){
-		clearInterval(t);
-	}
-}, 2000);
-
-print("debuger");
-Inject;
+const address = Memory.alloc(0x10);
+print("alloc:" + address);
+Memory.u32(address, 123);
+const v = Memory.u32(address);
+print("value:" + v);
+"ok";

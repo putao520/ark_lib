@@ -3,12 +3,12 @@
 int x = 1000;
 
 v8inject* global_inject = nullptr;
-void Getter(Local<String> property,
+void v8inject::Getter(Local<String> property,
 	const PropertyCallbackInfo<Value>& info) {
 	info.GetReturnValue().Set(x);
 }
 
-void Setter(Local<String> property, Local<Value> value,
+void v8inject::Setter(Local<String> property, Local<Value> value,
 	const PropertyCallbackInfo<void>& info) {
 	x = value->Int32Value(
 		info.GetIsolate()->GetCurrentContext()
@@ -22,5 +22,5 @@ v8inject* v8inject::current(Isolate* isolate) {
 }
 
 void v8inject::setup(Local<ObjectTemplate> parent, Local<String> name) {
-	parent->SetAccessor(name, Getter, Setter);
+	parent->SetAccessor(name, v8inject::Getter, v8inject::Setter);
 }

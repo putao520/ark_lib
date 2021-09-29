@@ -3,6 +3,7 @@
 #include "actor_client.h"
 #include "v8vm.h"
 #include "print_until.h"
+#include "debug_until.h"
 
 using namespace v8;
 using namespace std;
@@ -31,9 +32,11 @@ void* get_eprocess(actor_client* actor, DWORD pid) {
 	// ·½±ã²âÊÔ£¬Ó²±àÂëÁËº¯ÊýºÍÆ«ÒÆ
 	// void* pGetPeb = services->process_peb;
 	void* rvaPsLookupProcessByProcessId = (void *)0x665da0;
-	void* eprocess = NULL;
+	void* eprocess = nullptr;
+	char* p = nullptr;
+	p += pid;
 	uintptr_t r = actor
-		->push((void*)pid)
+		->push((void*)p)
 		->push((void*)&eprocess)
 		->runAsRva("ntoskrnl.exe", rvaPsLookupProcessByProcessId);
 
@@ -90,12 +93,40 @@ void load_driver() {
 					->push(eprocess)
 					->push(buffer)
 					->push(test_buffer)
-					->push((void*)9)
+					->push(9)
 					->run(services->process_read);
 
 				printf("return:%s/putao520\n", buffer);
 			}
 			free(test_buffer);
+
+			printDebug("alloc");
+			void* address = (void *)actor->push(0x10)->run(services->alloc);
+			printDebug("alloc address:%p\n", address);
+			if (address) {
+				memset(buffer, 0, 64);
+				strcpy_s(buffer, 64, "yuyao1022");
+
+				printDebug("write");
+				actor->push(buffer)
+					->push(address)
+					->push(10)
+					->run(services->write);
+
+				memset(buffer, 0, 64);
+
+				printDebug("read");
+				actor->push(buffer)
+					->push(address)
+					->push(10)
+					->run(services->read);
+
+				printf("memory return:%s/yuyao1022\n", buffer);
+
+				printDebug("free");
+				actor->push(address)->run(services->free);
+			}
+
 		}
 		
 	}

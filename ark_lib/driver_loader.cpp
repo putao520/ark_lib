@@ -34,7 +34,7 @@ driver_loader* driver_loader::setUri(const char* _uri) {
 	printf("Current DevFile:%ws\n", path.c_str());
 #endif
 	
-	assert(filesystem::exists(path));
+	// assert(filesystem::exists(path));
 
 	this->path = path.string();
 

@@ -79,9 +79,6 @@
     <Filter Include="源文件\v8_vm\v8process">
       <UniqueIdentifier>{71dac4ac-f381-4520-9f7d-4b9843db5503}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\v8_vm\v8kernel">
-      <UniqueIdentifier>{06c63282-5598-44a7-aec9-79bdc8c90ca0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\services">
       <UniqueIdentifier>{f8f2769d-b7ae-4c95-936a-ec3093c1cefe}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,12 @@
     </Filter>
     <Filter Include="源文件\services\ActorService">
       <UniqueIdentifier>{59b7b2de-e426-4fd9-bde9-c36d5d5c8b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8memory">
+      <UniqueIdentifier>{06c63282-5598-44a7-aec9-79bdc8c90ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\debug_until">
+      <UniqueIdentifier>{cde22ca4-6455-4691-a7d5-f12c9333c28b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -153,14 +156,17 @@
     <ClCompile Include="driver.cpp">
       <Filter>源文件\until\system\driver</Filter>
     </ClCompile>
-    <ClCompile Include="v8kernel.cpp">
-      <Filter>源文件\v8_vm\v8kernel</Filter>
+    <ClCompile Include="v8memory.cpp">
+      <Filter>源文件\v8_vm\v8memory</Filter>
     </ClCompile>
     <ClCompile Include="ActorService.cpp">
       <Filter>源文件\services\ActorService</Filter>
     </ClCompile>
     <ClCompile Include="DriverLoaderService.cpp">
       <Filter>源文件\services\DriverLoaderService</Filter>
+    </ClCompile>
+    <ClCompile Include="debug_until.cpp">
+      <Filter>源文件\until\debug_until</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,14 +236,17 @@
     <ClInclude Include="driver.h">
       <Filter>源文件\until\system\driver</Filter>
     </ClInclude>
-    <ClInclude Include="v8kernel.h">
-      <Filter>源文件\v8_vm\v8kernel</Filter>
+    <ClInclude Include="v8memory.h">
+      <Filter>源文件\v8_vm\v8memory</Filter>
     </ClInclude>
     <ClInclude Include="ActorService.h">
       <Filter>源文件\services\ActorService</Filter>
     </ClInclude>
     <ClInclude Include="DriverLoaderService.h">
       <Filter>源文件\services\DriverLoaderService</Filter>
+    </ClInclude>
+    <ClInclude Include="debug_until.h">
+      <Filter>源文件\until\debug_until</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

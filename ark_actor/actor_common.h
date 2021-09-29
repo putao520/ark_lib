@@ -24,22 +24,23 @@ typedef enum TASK_RUN_ERROR {
 	TASK_ERROR_TARGET		// 目标地址无效
 }TASK_RUN_ERROR;
 
+/*
 typedef struct task_block_parameter{
 	uintptr_t	payload;
 	uintptr_t	size;
 	uintptr_t	opearte;	// 0 in, 1 out
 }task_block_parameter;
+*/
 
 typedef struct task_block {
 	uintptr_t				status;					// 任务状态 0，空闲 1,（等待）执行 2,（等待）取值 404,删除任务块
 	uintptr_t				error;					// 执行错误
 	
 	uintptr_t				target;					// 调用目标
-	task_block_parameter	parameter[20];			// 参数列
+	uintptr_t				parameter[20];			// 参数列
 	uintptr_t				size;					// 参数数量
 
 	uintptr_t				receive;				// 返回列
-	uintptr_t				copy;					// 是否需要拷贝参数
 	uintptr_t				interrupt_level;		// 执行中断等级
 	InternalServices* internal_services;			// 内置服务表
 }task_block;
