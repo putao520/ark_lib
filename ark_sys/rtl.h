@@ -6,8 +6,10 @@
 #include "stdint.h"
 
 #ifdef WIN_KERNEL
-#include <ntddk.h>
-#include <ntstrsafe.h>
+#include <ntifs.h>
+// #include <ntddk.h>
+#include <Ntstrsafe.h>
+#include <windef.h>
 #include "stdbool.h"
 #else
 #include <Windows.h>

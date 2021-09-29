@@ -173,6 +173,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="actor_client.cpp" />
+    <ClCompile Include="ActorService.cpp" />
+    <ClCompile Include="driver.cpp" />
+    <ClCompile Include="DriverLoaderService.cpp" />
+    <ClCompile Include="print_until.cpp" />
     <ClCompile Include="process_adjust.cpp" />
     <ClCompile Include="driver_loader.cpp" />
     <ClCompile Include="file_until.cpp" />
@@ -186,6 +190,7 @@
     <ClCompile Include="v8env.cpp" />
     <ClCompile Include="v8inject.cpp" />
     <ClCompile Include="v8interval.cpp" />
+    <ClCompile Include="v8kernel.cpp" />
     <ClCompile Include="v8print.cpp" />
     <ClCompile Include="v8time.cpp" />
     <ClCompile Include="v8vm.cpp" />
@@ -196,6 +201,10 @@
     <ClInclude Include="..\ark_actor\ark_common.h" />
     <ClInclude Include="..\ark_actor\internal.h" />
     <ClInclude Include="actor_client.h" />
+    <ClInclude Include="ActorService.h" />
+    <ClInclude Include="driver.h" />
+    <ClInclude Include="DriverLoaderService.h" />
+    <ClInclude Include="print_until.h" />
     <ClInclude Include="process_adjust.h" />
     <ClInclude Include="driver_loader.h" />
     <ClInclude Include="IntervalTask.h" />
@@ -209,6 +218,7 @@
     <ClInclude Include="file_until.h" />
     <ClInclude Include="v8inject.h" />
     <ClInclude Include="v8interval.h" />
+    <ClInclude Include="v8kernel.h" />
     <ClInclude Include="v8print.h" />
     <ClInclude Include="v8time.h" />
     <ClInclude Include="v8vm.h" />

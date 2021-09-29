@@ -21,7 +21,7 @@ void Print(const FunctionCallbackInfo<v8::Value>& args) {
 void v8print::setup(Local<ObjectTemplate> global) {
 	// 构造全局对象
 	global->Set(
-		String::NewFromUtf8(_isolate, "print", NewStringType::kNormal).ToLocalChecked(),
+		String::NewFromUtf8Literal(_isolate, "print", NewStringType::kNormal),
 		FunctionTemplate::New(_isolate, Print)
 	);
 }

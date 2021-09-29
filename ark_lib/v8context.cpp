@@ -1,15 +1,17 @@
 #include "v8context.h"
 #include "v8inject.h"
+#include "v8kernel.h"
 #include "v8time.h"
 #include "v8interval.h"
 #include "v8print.h"
 
 #define SETUP_FUNC(type, isolate) type::current(isolate)->setup(global);
-
+#define SETUP_OBJ(type, isolate, name) type::current(isolate)->setup(global, String::NewFromUtf8(isolate, name, NewStringType::kInternalized).ToLocalChecked());
 Local<Context> v8context::New(Isolate* isolate) {
-	// 填充对象
 	Local<ObjectTemplate> global = v8::ObjectTemplate::New(isolate);
-	v8inject::Bind(global, String::NewFromUtf8(isolate, "Inject", NewStringType::kInternalized).ToLocalChecked());
+	// 填充对象
+	SETUP_OBJ(v8inject, isolate, "Inject")
+	SETUP_OBJ(v8kernel, isolate, "Kernel")
 
 	// 填充函数
 	SETUP_FUNC(v8time, isolate)

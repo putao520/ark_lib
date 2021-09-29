@@ -1,10 +1,12 @@
 #pragma once
-
-#include "../ark_sys/kernel.h"
-
 typedef struct InternalServices{
-	read_internal_pfn read;
-	write_internal_pfn write;
+	void* read;
+	void* write;
+
+	void* process_read;
+	void* process_write;
+
+	void* process_peb;
 }InternalServices;
 
 #ifdef WIN_KERNEL

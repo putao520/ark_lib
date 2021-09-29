@@ -1,5 +1,5 @@
 #pragma once
-#include <ntddk.h>
+#include "rtl.h"
 #include "../ark_actor/ark_common.h"
 
 #ifdef _WIN64

@@ -51,7 +51,6 @@ NTSTATUS DispatchIoctl(PDEVICE_OBJECT pDevObj, PIRP pIrp) {
 		status = STATUS_SUCCESS;
 		break;
 	case IOCTL_IO_ACTOR_NEW: {
-		__debugbreak();
 		// 只有一个 actor_server 实例
 		uOutSize = sizeof(void*);
 		if (!global_actor_server) {

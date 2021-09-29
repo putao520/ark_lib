@@ -27,8 +27,16 @@ void SwapOutputParameter(task_block_parameter* dst_parameter, task_block_paramet
 
 // 最多支持20个参数
 uintptr_t CallActorService(task_block* pTask) {
+	// 错误地址校验
+	if (!MmIsAddressValid(pTask->target)) {
+		pTask->error = TASK_ERROR_TARGET;
+		return 0;
+	}
+
 	task_block_parameter* new_parameter = NULL;
 	task_block_parameter* parameter = pTask->parameter;
+	// 设置 中断等级
+	KIRQL irql = KfRaiseIrql(pTask->interrupt_level);
 	// 创建内核层参数中间块
 	if (pTask->copy) {
 		new_parameter = _malloc( sizeof(task_block_parameter) * 20 );
@@ -42,14 +50,13 @@ uintptr_t CallActorService(task_block* pTask) {
 	if (pTask->copy && new_parameter) {
 		SwapOutputParameter(parameter, new_parameter, pTask->size);
 	}
+	KeLowerIrql(irql);
+
 	return r;
 }
 
 VOID ACTOR_SERVER_ROUTINE(actor_server* self) {
-
-	__debugbreak();
-
-	unsigned int idle_cnt = 0;
+	// unsigned int idle_cnt = 0;
 
 	if (!self)
 		return;
@@ -63,39 +70,41 @@ VOID ACTOR_SERVER_ROUTINE(actor_server* self) {
 	// wait event 等待事件触发(触发事件 alerted 停止服务)
 	PRKEVENT pkEvent = self->event_object;
 
+	// 1秒超时
+	// LARGE_INTEGER timeout = RtlConvertLongToLargeInteger(-10 * (1000*1000));
+
 	while ( !NT_ERROR(KeWaitForSingleObject(pkEvent, Executive, KernelMode, FALSE, NULL)) ) {
-		if (self->status == REMOVEING)
+
+		if (self->status == TASK_REMOVEING)
 			break;
 		
-		if (idle_cnt > 10000) {
-			self->status = IDLE;
-			KeClearEvent(pkEvent);
-		}
-		else
-			self->status = RUNNING;
+		// self->status = TASK_RUNNING;
 
-		void* node = list->first(list_array);
+		void* node = list->first(list_array);			
 		while (node) {
 			task_block* pTask = list->data(node);
 			if (pTask) {
 				switch (pTask->status) {
-				case RUNNING:	// 运行中
+				case TASK_RUNNING:	// 运行中
+					__debugbreak();
 					pTask->receive = CallActorService(pTask);
-					pTask->status = RETURNNING;
-					idle_cnt = 0;
 					break;
-				case REMOVEING: // 删除中（移除任务块时，需要判断 self->task_queue 是否为 remove 对象）
+				case TASK_REMOVEING:// 删除中（移除任务块时，需要判断 self->task_queue 是否为 remove 对象）
 					list->remove_node(list_array, node);
 					break;
-				default:		// 空闲中
-					idle_cnt++;
+				// default:			// 空闲中
+					// idle_cnt++;
 				}
+				pTask->status = TASK_RETURNNING;
 			}
 			node = list->next(node);
 		}
+		
+		// 设置为闲置对象
+		// self->status = TASK_IDLE;
 	}
 
-	self->status = WAITTINGFREE;
+	self->status = TASK_WAITTINGFREE;
 	PsTerminateSystemThread(STATUS_SUCCESS);
 }
 
@@ -107,10 +116,22 @@ actor_server* serve_fn(actor_server* self) {
 }
 
 actor_server* accpet_fn(actor_server* self, task_block* block) {
+	if (!self)
+		return self;
+
+#ifdef _DEBUG
+	_printf("list:%p\n", self->task_queue);
+	_printf("service:%p\n", self->internal_services);
+#endif // _DEBUG
+
 	array_list* list = self->task_queue;
-	if (self) {
+	if (block->internal_services)
+		memcpy(block->internal_services, self->internal_services, sizeof(InternalServices));
+
+	if (list) {
 		list->insert(list->handle, block);
 	}
+
 	return self;
 }
 
@@ -122,7 +143,7 @@ actor_server* NewActorServer(HANDLE eHandle) {
 	if (!self)
 		return self;
 
-	self->serve = IDLE;
+	self->serve = TASK_IDLE;
 #ifdef _WIN64
 	self->task_queue = NewArrayU64();
 #else
@@ -148,9 +169,9 @@ void DeleteActorServer(actor_server* self) {
 	if (!self)
 		return;
 
-	self->status = REMOVEING;
+	self->status = TASK_REMOVEING;
 	KeSetEvent(self->event_object, IO_NO_INCREMENT, FALSE);
-	while (self->status != WAITTINGFREE)
+	while (self->status != TASK_WAITTINGFREE)
 		_Sleep(1000);
 
 	if (self->task_queue)

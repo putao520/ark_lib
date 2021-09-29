@@ -7,12 +7,14 @@
 using namespace v8;
 using namespace std;
 
-class v8inject {
+class v8kernel {
 public:
-	v8inject(Isolate* isolate);
+	v8kernel(Isolate* isolate);
 
-	static v8inject* current(Isolate* isolate);
+	static v8kernel* current(Isolate* isolate);
 	void setup(Local<ObjectTemplate>, Local<String>);
 private:
 	Isolate* _isolate;
+
+	Local<ObjectTemplate> MakeTemplate();
 };

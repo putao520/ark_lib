@@ -16,3 +16,53 @@ int write_internal_fn(void* buffer, void* address, int size) {
 	}
 	return -1;
 }
+
+int inline process_read_internal_impl_fn(void* eprocess, void* buffer, void* address, int size) {
+	KAPC_STATE apcState = { 0 };
+	KeStackAttachProcess(eprocess, &apcState);
+
+	read_internal_fn(buffer, address, size);
+
+	KeUnstackDetachProcess(&apcState);
+
+	return size;
+}
+
+int process_read_internal_fn(void* eprocess, void* buffer, void* address, int size) {
+	if (IoGetCurrentProcess() == eprocess) {
+		process_read_internal_impl_fn(eprocess, buffer, address, size);
+	}
+	else {
+		char swapBuffer[256] = { 0 };
+		if (size > 256) {
+			void* _buffer = _malloc(size);
+			if (_buffer) {
+				process_read_internal_impl_fn(eprocess, _buffer, address, size);
+				read_internal_fn(buffer, _buffer, size);
+				_free(_buffer);
+			}
+		}
+		else {
+			void* _buffer = swapBuffer;
+			process_read_internal_impl_fn(eprocess, _buffer, address, size);
+			read_internal_fn(buffer, _buffer, size);
+		}
+	}
+	return size;
+}
+
+int inline process_write_internal_impl_fn(void* eprocess, void* buffer, void* address, int size) {
+	KAPC_STATE apcState = { 0 };
+	KeStackAttachProcess(eprocess, &apcState);
+
+	write_internal_fn(buffer, address, size);
+
+	KeUnstackDetachProcess(&apcState);
+
+	return size;
+}
+
+int process_write_internal_fn(void* eprocess, void* buffer, void* address, int size) {
+	
+	return size;
+}

@@ -3,110 +3,56 @@ CallActorServiceGen PROC
 mov rax, rcx
 mov rdi, rdx
 sub rsp,20h
+push r8
+push r10
+push r11
+push rdi
+test rdi, rdi
+je toCall
 
+mov rcx, qword ptr[rax]
+add rax,18h
 cmp rdi, 1
-jne toCall
-mov rcx, rax
-add rax,0fh
+je toCall
 
+mov rdx, qword ptr[rax]
+add rax,18h
 cmp rdi, 2
-jne toCall
-mov rdx, rax
-add rax,0fh
+je toCall
 
+mov r8, qword ptr[rax]
+add rax,18h
 cmp rdi, 3
-jne toCall
-mov r8, rax
-add rax,0fh
+je toCall
 
+mov r9, qword ptr[rax]
+add rax,18h
 cmp rdi, 4
-jne toCall
-mov r9, rax
-add rax,0fh
+je toCall
 
-cmp rdi, 5
-jne toCall
-push rax
-add rax,0fh
+mov r10, 5
 
-cmp rdi, 6
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 7
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 8
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 9
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 10
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 11
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 12
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 13
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 14
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 15
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 16
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 17
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 18
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 19
-jne toCall
-push rax
-add rax,0fh
-
-cmp rdi, 20
-jne toCall
-push rax
-add rax,0fh
+ToStack:
+cmp r10, rdi
+jb toCall
+mov r11, qword ptr[rax]
+push r11
+add rax,18h
+inc r10
+jmp ToStack
 
 toCall:
-call r8
+pop rdi
+pop r11
+pop r10
+pop rax
+call rax
 add rsp, 20h
 ret
 CallActorServiceGen ENDP
+
+GetProcessPeb PROC
+mov rax,gs:[60h]
+ret
+GetProcessPeb ENDP
 END

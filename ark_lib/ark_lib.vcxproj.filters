@@ -67,6 +67,30 @@
     <Filter Include="源文件\gs_driver\internal">
       <UniqueIdentifier>{9dadb043-624b-4f9c-8bd2-d9f381b5b668}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\until\print_until">
+      <UniqueIdentifier>{787cd849-c495-4a25-b489-e8827cc66193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\system">
+      <UniqueIdentifier>{46442fc5-15e2-44da-b544-52cfd8b45ff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\system\driver">
+      <UniqueIdentifier>{dd6d1c57-fad0-4bb3-96b2-40a2e324c14d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8process">
+      <UniqueIdentifier>{71dac4ac-f381-4520-9f7d-4b9843db5503}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8kernel">
+      <UniqueIdentifier>{06c63282-5598-44a7-aec9-79bdc8c90ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\services">
+      <UniqueIdentifier>{f8f2769d-b7ae-4c95-936a-ec3093c1cefe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\services\DriverLoaderService">
+      <UniqueIdentifier>{7a85760f-8408-4e71-95c8-236bab67b33f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\services\ActorService">
+      <UniqueIdentifier>{59b7b2de-e426-4fd9-bde9-c36d5d5c8b6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -122,6 +146,21 @@
     </ClCompile>
     <ClCompile Include="test.cpp">
       <Filter>源文件\test</Filter>
+    </ClCompile>
+    <ClCompile Include="print_until.cpp">
+      <Filter>源文件\until\print_until</Filter>
+    </ClCompile>
+    <ClCompile Include="driver.cpp">
+      <Filter>源文件\until\system\driver</Filter>
+    </ClCompile>
+    <ClCompile Include="v8kernel.cpp">
+      <Filter>源文件\v8_vm\v8kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorService.cpp">
+      <Filter>源文件\services\ActorService</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverLoaderService.cpp">
+      <Filter>源文件\services\DriverLoaderService</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +223,21 @@
     </ClInclude>
     <ClInclude Include="..\ark_actor\internal.h">
       <Filter>源文件\gs_driver\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="print_until.h">
+      <Filter>源文件\until\print_until</Filter>
+    </ClInclude>
+    <ClInclude Include="driver.h">
+      <Filter>源文件\until\system\driver</Filter>
+    </ClInclude>
+    <ClInclude Include="v8kernel.h">
+      <Filter>源文件\v8_vm\v8kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorService.h">
+      <Filter>源文件\services\ActorService</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverLoaderService.h">
+      <Filter>源文件\services\DriverLoaderService</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

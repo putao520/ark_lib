@@ -35,11 +35,8 @@
     <Filter Include="Source Files\internal">
       <UniqueIdentifier>{e675987f-f1d5-4603-a04f-c9e1da3f9814}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\internal\kernel">
+    <Filter Include="Source Files\internal\memory">
       <UniqueIdentifier>{d855929a-283c-4a0c-9001-f34df7682391}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\internal\process">
-      <UniqueIdentifier>{a1858dc6-51bf-45f4-b4ec-3a3a184bf906}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +56,7 @@
       <Filter>Source Files\until\rtl</Filter>
     </ClCompile>
     <ClCompile Include="kernel.c">
-      <Filter>Source Files\internal\kernel</Filter>
+      <Filter>Source Files\internal\memory</Filter>
     </ClCompile>
     <ClCompile Include="..\ark_actor\internal.c">
       <Filter>Source Files\internal</Filter>
@@ -91,7 +88,7 @@
       <Filter>Source Files\until\fix</Filter>
     </ClInclude>
     <ClInclude Include="kernel.h">
-      <Filter>Source Files\internal\kernel</Filter>
+      <Filter>Source Files\internal\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\ark_actor\internal.h">
       <Filter>Source Files\internal</Filter>
