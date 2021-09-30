@@ -1,3 +1,5 @@
+print("chinese中文cn");
+
 const address = Memory.alloc(0x1000);
 print("alloc:" + Number(address).toString(16));
 

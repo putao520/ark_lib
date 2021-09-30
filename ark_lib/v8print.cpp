@@ -1,5 +1,5 @@
 #include "v8print.h"
-
+#include "text_encode.h"
 
 v8print* global_v8t = nullptr;
 v8print::v8print(Isolate* isolate) :
@@ -12,8 +12,20 @@ v8print::~v8print() {
 void Print(const FunctionCallbackInfo<v8::Value>& args) {
 	Isolate* isolate = args.GetIsolate();
 	args.GetReturnValue().Set(Undefined(isolate));
-	Local<Value> result = args[0].As<Value>();
+	auto str = args[0].As<Value>()->ToString(isolate->GetCurrentContext());
+	if (str.IsEmpty())
+		return;
+	Local<Value> result = str.ToLocalChecked();
 	String::Utf8Value utf8(isolate, result);
+
+	/*
+	wchar_t* buffer = (wchar_t *)TextEncode::utf16le(*utf8);
+	if (buffer) {
+		printf("%ws\n", (wchar_t *)buffer);
+
+		TextEncode::free(buffer);
+	}
+	*/
 	printf("%s\n", *utf8);
 }
 

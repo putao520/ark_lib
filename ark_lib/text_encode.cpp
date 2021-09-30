@@ -5,6 +5,7 @@
 
 #define BUF_MAX     4096  
 
+using namespace std;
 /*
  * data    传入参数， 需要探测的字符串
  * len，    传入参数， 探测字符串长度
@@ -135,3 +136,24 @@ char* TextEncode::unicode2utf8(wchar_t* str) {
 	}
 	return target;
 }
+/*
+std::string TextEncode::UnicodeToAscii(const wchar_t* str)
+{
+	int	iTextLen = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
+	std::vector<char> vecText(iTextLen, '\0');
+	::WideCharToMultiByte(CP_ACP, 0, str, -1, &(vecText[0]), iTextLen, NULL, NULL);
+
+	std::string strText = &(vecText[0]);
+
+	return strText;
+}
+
+std::string TextEncode::UTF8ToString(const char* utf8Data)
+{
+	//先将UTF-8转换成Unicode
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+	std::wstring wString = conv.from_bytes(utf8Data);
+	//在转换成string
+	return UnicodeToAscii(wString.c_str());
+}
+*/
