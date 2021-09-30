@@ -9,10 +9,13 @@
 
 int main(int argc, char* argv[])
 {
-	
-	// load_v8vm();
-	load_driver();
+#ifdef _LOCAL
+	test_v8vm();
+#else
+	load_v8vm();
+#endif
 
+	// load_driver();
 	system("pause");
 }
 

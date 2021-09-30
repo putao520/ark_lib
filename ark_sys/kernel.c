@@ -72,6 +72,40 @@ int inline process_write_internal_impl_fn(void* eprocess, void* buffer, void* ad
 }
 
 int process_write_internal_fn(void* eprocess, void* buffer, void* address, int size) {
-	
+	if (IoGetCurrentProcess() == eprocess) {
+		process_write_internal_fn(eprocess, buffer, address, size);
+	}
+	else {
+		char swapBuffer[256] = { 0 };
+		if (size > 256) {
+			void* _buffer = _malloc(size);
+			if (_buffer) {
+				process_write_internal_impl_fn(eprocess, _buffer, address, size);
+				write_internal_fn(buffer, _buffer, size);
+				_free(_buffer);
+			}
+		}
+		else {
+			void* _buffer = swapBuffer;
+			process_write_internal_impl_fn(eprocess, _buffer, address, size);
+			write_internal_fn(buffer, _buffer, size);
+		}
+	}
 	return size;
+}
+
+unsigned int str_bufferlen_fn(char* buffer) {
+	char* start = buffer;
+	while (MmIsAddressValid(buffer) && *buffer)
+		buffer++;
+
+	return buffer - start;
+}
+
+unsigned int ws_bufferlen_fn(short* buffer) {
+	short* start = buffer;
+	while (MmIsAddressValid(buffer) && *buffer)
+		buffer++;
+
+	return buffer - start;
 }

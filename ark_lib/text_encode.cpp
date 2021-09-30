@@ -6,8 +6,8 @@
 #define BUF_MAX     4096  
 
 /*
- * data，    传入参数， 需要探测的字符串
- * len，     传入参数， 探测字符串长度
+ * data    传入参数， 需要探测的字符串
+ * len，    传入参数， 探测字符串长度
  * detected  传出参数， 探测的最有可能的字符编码名称, 调用者需要释放该字段
 **/
 bool detectTextEncoding(const char* data, size_t len, char** detected)
@@ -81,8 +81,7 @@ char* TextEncode::utf8(char * str) {
     string text = str;
     size_t size = text.length();
     const char* buffer = text.c_str();
-    char* target = str;
-
+    char* target = nullptr;
     if (detectTextEncoding(buffer, size, &detected)) {
         target = new char[size * 2];
         memset(target, 0, size * 2);
@@ -90,11 +89,49 @@ char* TextEncode::utf8(char * str) {
             delete[] target;
             target = str;
         }
-        else {
-            delete[] str;
-        }
         delete[] detected;
     }
-
     return target;
+}
+
+char* TextEncode::utf16le(char* str) {
+	char* detected = NULL;
+	string text = str;
+	size_t size = text.length();
+	const char* buffer = text.c_str();
+	char* target = nullptr;
+	if (detectTextEncoding(buffer, size, &detected)) {
+		target = new char[size * 4];
+		memset(target, 0, size * 4);
+		if (convert("UTF-16LE", detected, target, (int32_t)(size * 4), buffer, (int32_t)size) != U_ZERO_ERROR) {
+			delete[] target;
+			target = str;
+		}
+		delete[] detected;
+	}
+
+	return target;
+}
+
+void TextEncode::free(void* str) {
+    if( str )
+        delete[] str;
+}
+
+char* TextEncode::unicode2utf8(wchar_t* str) {
+	char* detected = NULL;
+	wstring text = str;
+	size_t size = text.length()*sizeof(wchar_t);
+	const wchar_t* buffer = text.c_str();
+	char* target = nullptr;
+	if (detectTextEncoding((const char *)buffer, size, &detected)) {
+		target = new char[size * 2];
+		memset(target, 0, size * 2);
+		if (convert("UTF-8", detected, target, (int32_t)(size * 2), (char*)buffer, (int32_t)size) != U_ZERO_ERROR) {
+			delete[] target;
+			target = (char *)str;
+		}
+		delete[] detected;
+	}
+	return target;
 }

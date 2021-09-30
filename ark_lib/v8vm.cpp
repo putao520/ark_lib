@@ -60,11 +60,13 @@ v8vm&& v8vm::script(const char * script) {
 
 v8vm&& v8vm::load(const char* file) {
 	FileUntil fileIo(file);
-	char* script = static_cast<char *>(fileIo.toMemory());
-	if (script) {
-		script = TextEncode::utf8(script);
-
-		this->script(script);
+	char* context = static_cast<char *>(fileIo.toMemory());
+	if (context) {
+		char* script = TextEncode::utf8(context);
+		if (script) {
+			this->script(script);
+		}
+		
 	}
 	return move(*this);
 }

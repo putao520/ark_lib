@@ -110,7 +110,8 @@ void _QueryLocalTime(TIME_FIELDS* out) {
 void* _malloc(size_t size) {
 #ifdef WIN_KERNEL
 	void* r = ExAllocatePoolWithTag(NonPagedPool, size, 0);
-	memset(r, 0, size);
+	if(r)
+		memset(r, 0, size);
 	return r;
 #else
 	return calloc(1, size);

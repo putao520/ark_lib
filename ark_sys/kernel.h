@@ -17,4 +17,7 @@ int process_write_internal_fn(void* eprocess, void* buffer, void* address, int s
 uintptr_t alloc_internal_fn(unsigned int size);
 void free_internal_fn(void* address);
 
+unsigned int str_bufferlen_fn(char* buffer);
+unsigned int ws_bufferlen_fn(short* buffer);
+
 uintptr_t GetProcessPeb();

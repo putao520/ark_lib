@@ -13,6 +13,9 @@ InternalServices* NewInternalServices() {
 	self->alloc = (void*)alloc_internal_fn;
 	self->free = (void*)free_internal_fn;
 
+	self->getStringSize = (void*)str_bufferlen_fn;
+	self->getWStringSize = (void*)ws_bufferlen_fn;
+
 	self->process_read = (void*)process_read_internal_fn;
 	self->process_write = (void*)process_write_internal_fn;
 

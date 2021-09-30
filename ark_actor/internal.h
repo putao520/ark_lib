@@ -6,9 +6,11 @@ typedef struct InternalServices{
 	void* alloc;
 	void* free;
 
+	void* getStringSize;
+	void* getWStringSize;
+
 	void* process_read;
 	void* process_write;
-
 	void* process_peb;
 }InternalServices;
 

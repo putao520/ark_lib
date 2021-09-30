@@ -10,7 +10,7 @@ uintptr_t CallActorService(task_block* pTask) {
 		return 0;
 	}
 
-	uintptr_t* parameter = &pTask->parameter;
+	uintptr_t* parameter = pTask->parameter;
 	// 设置 中断等级
 	KIRQL irql = KfRaiseIrql((KIRQL)pTask->interrupt_level);
 	// 创建内核层参数中间块
@@ -54,7 +54,7 @@ VOID ACTOR_SERVER_ROUTINE(actor_server* self) {
 			if (pTask) {
 				switch (pTask->status) {
 				case TASK_RUNNING:	// 运行中
-					__debugbreak();
+					// __debugbreak();
 					pTask->receive = CallActorService(pTask);
 					break;
 				case TASK_REMOVEING:// 删除中（移除任务块时，需要判断 self->task_queue 是否为 remove 对象）

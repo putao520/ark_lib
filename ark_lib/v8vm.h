@@ -71,12 +71,12 @@ public:
 					}
 					// 有符号 64位 整数
 					else if constexpr (is_signed<T>::value && is_integral<T>::value && sizeof(T) == 8) {
-						r = result->IntegerValue(_context).ToChecked();
+						r = result->ToBigInt(_context).ToLocalChecked()->Int64Value();
 
 					}
 					// 无符号 64位 整数
 					else if constexpr (is_unsigned<T>::value && is_integral<T>::value && sizeof(T) == 8) {
-						r = static_cast<uint64_t>(result->IntegerValue(_context).ToChecked());
+						r = result->ToBigInt(_context).ToLocalChecked()->Uint64Value();
 					}
 					// double
 					else if constexpr (is_floating_point<T>::value && sizeof(T) == 8) {

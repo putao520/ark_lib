@@ -1,15 +1,16 @@
 #include "ActorService.h"
 #include "DriverLoaderService.h"
+#include "debug_until.h"
 
-// 改成线程变量
-actor_client* current_actor = NULL;
+thread_local actor_client* thread_actor = NULL;
 actor_client* ActorService::current() {
-	if (!current_actor)
-		current_actor = actor_client::New(DriverLoaderService::current());
-
-	return current_actor;
+	if (!thread_actor) {
+		thread_actor = actor_client::New(DriverLoaderService::current())->connect();
+	}
+	return thread_actor;
 }
 
 InternalServices* ActorService::services() {
 	return current()->services();
 }
+

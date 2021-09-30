@@ -4,6 +4,7 @@
 #include "v8vm.h"
 #include "print_until.h"
 #include "debug_until.h"
+#include "DriverLoaderService.h"
 
 using namespace v8;
 using namespace std;
@@ -13,7 +14,20 @@ void load_v8vm() {
 	printf("%s\n", r.c_str());
 
 	std::cout << "Hello World!\n";
-	this_thread::sleep_for(std::chrono::seconds(3000));
+	
+	system("pause");
+	DriverLoaderService::free();
+}
+
+void test_v8vm() {
+	v8vm vm;
+	auto r = vm.load("single.js").exec<string>();
+	printf("%s\n", r.c_str());
+
+	std::cout << "Hello World!\n";
+
+	system("pause");
+	DriverLoaderService::free();
 }
 
 void load_kernel_module() {
