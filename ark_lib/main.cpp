@@ -11,11 +11,15 @@ int main(int argc, char* argv[])
 {
 	system("chcp 65001");
 
+	/*
 #ifdef _LOCAL
 	test_v8vm();
 #else
 	load_v8vm();
 #endif
+	*/
+
+	debug_pe();
 
 	// load_driver();
 	system("pause");

@@ -2,4 +2,5 @@
 ```
 vcpkg install v8
 vcpkg install restclient-cpp
+vcpkg install pe-parse
 ```

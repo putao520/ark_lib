@@ -94,6 +94,15 @@
     <Filter Include="源文件\until\debug_until">
       <UniqueIdentifier>{cde22ca4-6455-4691-a7d5-f12c9333c28b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\symbol">
+      <UniqueIdentifier>{82258fce-f881-4ef5-bb5d-6e62e04b6481}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\symbol\PdbInfo">
+      <UniqueIdentifier>{5a364cee-1aab-4b86-a61a-53edac019ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\guid_until">
+      <UniqueIdentifier>{15b475f4-8399-489e-af70-dd28e68e69a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -167,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="debug_until.cpp">
       <Filter>源文件\until\debug_until</Filter>
+    </ClCompile>
+    <ClCompile Include="PdbInfo.cpp">
+      <Filter>源文件\symbol\PdbInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="guid_until.cpp">
+      <Filter>源文件\until\guid_until</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="debug_until.h">
       <Filter>源文件\until\debug_until</Filter>
+    </ClInclude>
+    <ClInclude Include="PdbInfo.h">
+      <Filter>源文件\symbol\PdbInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="guid_until.h">
+      <Filter>源文件\until\guid_until</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,9 @@
 #include "print_until.h"
 #include "debug_until.h"
 #include "DriverLoaderService.h"
+#include "PdbInfo.h"
+#include <restclient-cpp/restclient.h>
+#include <restclient-cpp/connection.h>
 
 using namespace v8;
 using namespace std;
@@ -148,4 +151,27 @@ void load_driver() {
 	system("pause");
 	loader->unload();
 	delete loader;
+}
+
+void debug_pe() {
+	PdbInfo pdbInfo("c:\\windows\\system32\\win32calc.exe");
+	string path = "/download/symbols/" + pdbInfo.getPdbName() + "/" + pdbInfo.getSigned() + "1/" + pdbInfo.getPdbName();
+	RestClient::init();
+	auto client = new RestClient::Connection("http://msdl.microsoft.com");
+	client->SetUserAgent("Microsoft-Symbol-Server/10.1710.0.0");
+	// RestClient::HeaderFields headers;
+	// headers["Accept-Encoding"] = "gzip";
+	client->AppendHeader("Accept-Encoding", "gzip");
+
+	
+
+	auto r = client->get(path);
+	if (r.code == 302) {
+		r = RestClient::get(r.headers["Location"]);
+	}
+	if (r.code == 200) {
+
+	}
+	
+	RestClient::disable();
 }
