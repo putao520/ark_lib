@@ -154,7 +154,7 @@ void load_driver() {
 }
 
 void debug_pe() {
-	PdbInfo pdbInfo("c:\\windows\\system32\\win32calc.exe");
+	PdbInfo pdbInfo("c:\\windows\\system32\\hal.dll");
 	string path = "/download/symbols/" + pdbInfo.getPdbName() + "/" + pdbInfo.getSigned() + "1/" + pdbInfo.getPdbName();
 	RestClient::init();
 	auto client = new RestClient::Connection("http://msdl.microsoft.com");
