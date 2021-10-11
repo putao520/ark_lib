@@ -1,6 +1,12 @@
-#### comiple
+#### tools
 ```
+vcpkg 			[https://github.com/microsoft/vcpkg.git]
+vs2019
+sdk 10.0.19041.0
+Ó¢ÎÄÓïÑÔ°ü
+```
+#### comiple
+```[x64-windows-static]
 vcpkg install v8
 vcpkg install restclient-cpp
-vcpkg install pe-parse
 ```
