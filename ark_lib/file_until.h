@@ -21,9 +21,7 @@ public:
 	FileUntil(const char* file);
 	// ~FileUntil();
 	void* toMemory();
-	TEXT_TYPE getTextEncode();
 private:
-	bool check_utf8_without_bom();
 
 	path this_path;
 	char* buffer;
