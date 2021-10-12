@@ -4,7 +4,6 @@
 #include "../ark_actor/internal.h"
 #include "driver.h"
 
-using namespace std;
 class actor_client {
 public:
 	actor_client(driver_loader*);

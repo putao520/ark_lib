@@ -48,6 +48,8 @@ Memory.free(address);
 
 print("hal.dll:" + Number(findDriver("hal.dll")).toString(16));
  
+// procedure(address, arg_0, arg_1, arg_2,)
+
 print("test crash")
 Memory.f32('to crash');
 "ok";

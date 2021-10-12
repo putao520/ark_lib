@@ -205,6 +205,7 @@
     <ClCompile Include="v8memory.cpp" />
     <ClCompile Include="v8print.cpp" />
     <ClCompile Include="v8require.cpp" />
+    <ClCompile Include="v8procedure.cpp" />
     <ClCompile Include="v8time.cpp" />
     <ClCompile Include="v8vm.cpp" />
     <ClCompile Include="main.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="v8memory.h" />
     <ClInclude Include="v8print.h" />
     <ClInclude Include="v8require.h" />
+    <ClInclude Include="v8procedure.h" />
     <ClInclude Include="v8time.h" />
     <ClInclude Include="v8vm.h" />
   </ItemGroup>

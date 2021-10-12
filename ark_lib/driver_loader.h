@@ -2,12 +2,10 @@
 #include <Windows.h>
 #include <string>
 
-using namespace std;
-
 class driver_loader {
 private:
 	// 文件地址,如果是http开头的path,尝试自动下载
-	string path;
+	std::string path;
 	const char* driverName = NULL;
 
 	// 与驱动通讯是否使用加密模式
@@ -38,8 +36,8 @@ public:
 	driver_loader* setUri(const char* _uri);
 	driver_loader* wait();
 	// 清除上下文(仅当下载时有效),删除下载文件
-	string getPath();
-	string getDevName();
+	std::string getPath();
+	std::string getDevName();
 	DWORD getError();
 
 	// 等待结束

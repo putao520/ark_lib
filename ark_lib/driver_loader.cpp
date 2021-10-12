@@ -16,15 +16,15 @@ driver_loader* driver_loader::InitDevName(const char* lpszDriverName) {
 	this->driverName = lpszDriverName;
 	return this;
 }
-string driver_loader::getDevName() {
-	string r = this->driverName;
+std::string driver_loader::getDevName() {
+	std::string r = this->driverName;
 	return r;
 }
-string driver_loader::getPath() {
+std::string driver_loader::getPath() {
 	return this->path;
 }
 driver_loader* driver_loader::setUri(const char* _uri) {
-	filesystem::path path(_uri);
+	std::filesystem::path path(_uri);
 
 	if (path.has_relative_path()) {
 		path = absolute(path);
