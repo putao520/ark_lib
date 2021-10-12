@@ -3,7 +3,7 @@
 #include <iostream>
 #include <include/libplatform/libplatform.h>
 #include <include/v8.h>
-#include <queue>
+
 using namespace v8;
 using namespace std;
 

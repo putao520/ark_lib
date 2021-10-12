@@ -19,26 +19,11 @@
     <Filter Include="源文件\until">
       <UniqueIdentifier>{6ab32057-5e95-416d-9d5a-f3fecbe670f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\v8_vm\v8time">
-      <UniqueIdentifier>{026beda3-4e72-47a0-8f29-b18935ff52cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\v8_vm\v8inject">
-      <UniqueIdentifier>{01035cd4-0886-43cf-bf84-18b827f22358}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\v8_vm\v8context">
       <UniqueIdentifier>{9e1fbdaf-b8af-4c63-9a4a-95febf48f982}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\v8_vm\v8print">
-      <UniqueIdentifier>{24826826-01a5-4d38-9602-2f559f3ec5f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\until\queue_ring">
       <UniqueIdentifier>{000220d9-bc22-4c76-a2a5-a3f255ecdd99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\v8_vm\v8time\setTimeout">
-      <UniqueIdentifier>{8b2c0254-06fd-4dcd-afe4-7cf48eb53f17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\v8_vm\v8time\interval">
-      <UniqueIdentifier>{0396157f-021f-4738-8ad1-8c2c264db8d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\gs_driver">
       <UniqueIdentifier>{8e3c6389-f6e0-4e1f-807b-b3fdd41b0c12}</UniqueIdentifier>
@@ -76,9 +61,6 @@
     <Filter Include="源文件\until\system\driver">
       <UniqueIdentifier>{dd6d1c57-fad0-4bb3-96b2-40a2e324c14d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\v8_vm\v8process">
-      <UniqueIdentifier>{71dac4ac-f381-4520-9f7d-4b9843db5503}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\services">
       <UniqueIdentifier>{f8f2769d-b7ae-4c95-936a-ec3093c1cefe}</UniqueIdentifier>
     </Filter>
@@ -87,9 +69,6 @@
     </Filter>
     <Filter Include="源文件\services\ActorService">
       <UniqueIdentifier>{59b7b2de-e426-4fd9-bde9-c36d5d5c8b6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\v8_vm\v8memory">
-      <UniqueIdentifier>{06c63282-5598-44a7-aec9-79bdc8c90ca0}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\until\debug_until">
       <UniqueIdentifier>{cde22ca4-6455-4691-a7d5-f12c9333c28b}</UniqueIdentifier>
@@ -103,6 +82,33 @@
     <Filter Include="源文件\until\guid_until">
       <UniqueIdentifier>{15b475f4-8399-489e-af70-dd28e68e69a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\v8_vm\addons">
+      <UniqueIdentifier>{894a5855-f6ae-4205-a013-5bc567fb94b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8require">
+      <UniqueIdentifier>{ef379042-7ead-4c76-a245-6f2c6293929b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8driver">
+      <UniqueIdentifier>{f175cb4a-b68d-4046-b6d1-5fd546ac8e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8inject">
+      <UniqueIdentifier>{01035cd4-0886-43cf-bf84-18b827f22358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8memory">
+      <UniqueIdentifier>{06c63282-5598-44a7-aec9-79bdc8c90ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8print">
+      <UniqueIdentifier>{24826826-01a5-4d38-9602-2f559f3ec5f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8time">
+      <UniqueIdentifier>{026beda3-4e72-47a0-8f29-b18935ff52cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8time\setTimeout">
+      <UniqueIdentifier>{8b2c0254-06fd-4dcd-afe4-7cf48eb53f17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8time\interval">
+      <UniqueIdentifier>{0396157f-021f-4738-8ad1-8c2c264db8d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -115,13 +121,13 @@
       <Filter>源文件\v8_vm</Filter>
     </ClCompile>
     <ClCompile Include="v8inject.cpp">
-      <Filter>源文件\v8_vm\v8inject</Filter>
+      <Filter>源文件\v8_vm\addons\v8inject</Filter>
     </ClCompile>
     <ClCompile Include="v8context.cpp">
       <Filter>源文件\v8_vm\v8context</Filter>
     </ClCompile>
     <ClCompile Include="v8print.cpp">
-      <Filter>源文件\v8_vm\v8print</Filter>
+      <Filter>源文件\v8_vm\addons\v8print</Filter>
     </ClCompile>
     <ClCompile Include="queue_ring.cpp">
       <Filter>源文件\until\queue_ring</Filter>
@@ -130,16 +136,16 @@
       <Filter>源文件\until\queue_ring</Filter>
     </ClCompile>
     <ClCompile Include="v8time.cpp">
-      <Filter>源文件\v8_vm\v8time\setTimeout</Filter>
+      <Filter>源文件\v8_vm\addons\v8time\setTimeout</Filter>
     </ClCompile>
     <ClCompile Include="TimeoutTask.cpp">
-      <Filter>源文件\v8_vm\v8time\setTimeout</Filter>
+      <Filter>源文件\v8_vm\addons\v8time\setTimeout</Filter>
     </ClCompile>
     <ClCompile Include="v8interval.cpp">
-      <Filter>源文件\v8_vm\v8time\interval</Filter>
+      <Filter>源文件\v8_vm\addons\v8time\interval</Filter>
     </ClCompile>
     <ClCompile Include="IntervalTask.cpp">
-      <Filter>源文件\v8_vm\v8time\interval</Filter>
+      <Filter>源文件\v8_vm\addons\v8time\interval</Filter>
     </ClCompile>
     <ClCompile Include="driver_loader.cpp">
       <Filter>源文件\gs_driver\loader</Filter>
@@ -166,7 +172,7 @@
       <Filter>源文件\until\system\driver</Filter>
     </ClCompile>
     <ClCompile Include="v8memory.cpp">
-      <Filter>源文件\v8_vm\v8memory</Filter>
+      <Filter>源文件\v8_vm\addons\v8memory</Filter>
     </ClCompile>
     <ClCompile Include="ActorService.cpp">
       <Filter>源文件\services\ActorService</Filter>
@@ -183,6 +189,12 @@
     <ClCompile Include="guid_until.cpp">
       <Filter>源文件\until\guid_until</Filter>
     </ClCompile>
+    <ClCompile Include="v8driver.cpp">
+      <Filter>源文件\v8_vm\addons\v8driver</Filter>
+    </ClCompile>
+    <ClCompile Include="v8require.cpp">
+      <Filter>源文件\v8_vm\addons\v8require</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="v8vm.h">
@@ -192,13 +204,13 @@
       <Filter>源文件\v8_vm</Filter>
     </ClInclude>
     <ClInclude Include="v8inject.h">
-      <Filter>源文件\v8_vm\v8inject</Filter>
+      <Filter>源文件\v8_vm\addons\v8inject</Filter>
     </ClInclude>
     <ClInclude Include="v8context.h">
       <Filter>源文件\v8_vm\v8context</Filter>
     </ClInclude>
     <ClInclude Include="v8print.h">
-      <Filter>源文件\v8_vm\v8print</Filter>
+      <Filter>源文件\v8_vm\addons\v8print</Filter>
     </ClInclude>
     <ClInclude Include="queue_ring.h">
       <Filter>源文件\until\queue_ring</Filter>
@@ -207,16 +219,16 @@
       <Filter>源文件\until\queue_ring</Filter>
     </ClInclude>
     <ClInclude Include="v8time.h">
-      <Filter>源文件\v8_vm\v8time\setTimeout</Filter>
+      <Filter>源文件\v8_vm\addons\v8time\setTimeout</Filter>
     </ClInclude>
     <ClInclude Include="TimeoutTask.h">
-      <Filter>源文件\v8_vm\v8time\setTimeout</Filter>
+      <Filter>源文件\v8_vm\addons\v8time\setTimeout</Filter>
     </ClInclude>
     <ClInclude Include="v8interval.h">
-      <Filter>源文件\v8_vm\v8time\interval</Filter>
+      <Filter>源文件\v8_vm\addons\v8time\interval</Filter>
     </ClInclude>
     <ClInclude Include="IntervalTask.h">
-      <Filter>源文件\v8_vm\v8time\interval</Filter>
+      <Filter>源文件\v8_vm\addons\v8time\interval</Filter>
     </ClInclude>
     <ClInclude Include="driver_loader.h">
       <Filter>源文件\gs_driver\loader</Filter>
@@ -252,7 +264,7 @@
       <Filter>源文件\until\system\driver</Filter>
     </ClInclude>
     <ClInclude Include="v8memory.h">
-      <Filter>源文件\v8_vm\v8memory</Filter>
+      <Filter>源文件\v8_vm\addons\v8memory</Filter>
     </ClInclude>
     <ClInclude Include="ActorService.h">
       <Filter>源文件\services\ActorService</Filter>
@@ -268,6 +280,15 @@
     </ClInclude>
     <ClInclude Include="guid_until.h">
       <Filter>源文件\until\guid_until</Filter>
+    </ClInclude>
+    <ClInclude Include="v8driver.h">
+      <Filter>源文件\v8_vm\addons\v8driver</Filter>
+    </ClInclude>
+    <ClInclude Include="v8require.h">
+      <Filter>源文件\v8_vm\addons\v8require</Filter>
+    </ClInclude>
+    <ClInclude Include="v8contextDefine.h">
+      <Filter>源文件\v8_vm\v8context</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

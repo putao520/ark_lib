@@ -19,7 +19,8 @@ int main(int argc, char* argv[])
 #endif
 	*/
 
-	debug_pe();
+	// debug_pe();
+	load_v8vm();
 
 	// load_driver();
 	system("pause");

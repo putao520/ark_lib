@@ -21,6 +21,7 @@ public:
 	FileUntil(const char* file);
 	// ~FileUntil();
 	void* toMemory();
+	bool existing();
 private:
 
 	path this_path;

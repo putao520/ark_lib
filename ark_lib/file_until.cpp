@@ -6,10 +6,19 @@ using namespace std;
 using namespace std::filesystem;
 FileUntil::FileUntil(const char* file) {
 	path _path(file);
-	if (!_path.is_absolute())
-		_path = canonical(_path);
+	if (!_path.is_absolute()) {
+		try {
+			_path = canonical(_path);
+		}
+		catch (...) {
+		}
+	}
 
 	this_path = _path;
+}
+
+bool FileUntil::existing() {
+	return exists(this_path);
 }
 
 void* FileUntil::toMemory() {

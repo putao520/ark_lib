@@ -5,13 +5,13 @@
 #include <include/v8.h>
 
 using namespace v8;
-class v8print {
+class v8require {
 public:
-	v8print(Isolate* isolate);
-	~v8print();
+	v8require(Isolate* isolate);
+	~v8require();
 	void setup(Local<ObjectTemplate>);
 
-	static v8print* current(Isolate* isolate);
+	static v8require* current(Isolate* isolate);
 
 private:
 	Isolate* _isolate;

@@ -1,12 +1,11 @@
-#include "v8print.h"
-// #include "text_encode.h"
+#include "v8buffer.h"
 
-v8print* global_v8t = nullptr;
-v8print::v8print(Isolate* isolate) :
+v8buffer* global_v8t = nullptr;
+v8buffer::v8buffer(Isolate* isolate) :
 	_isolate(isolate) {
 }
 
-v8print::~v8print() {
+v8buffer::~v8buffer() {
 }
 
 void Print(const FunctionCallbackInfo<v8::Value>& args) {
@@ -18,8 +17,6 @@ void Print(const FunctionCallbackInfo<v8::Value>& args) {
 	Local<Value> result = str.ToLocalChecked();
 	String::Utf8Value utf8(isolate, result);
 
-	
-
 	/*
 	wchar_t* buffer = (wchar_t *)TextEncode::utf16le(*utf8);
 	if (buffer) {
@@ -28,21 +25,19 @@ void Print(const FunctionCallbackInfo<v8::Value>& args) {
 		TextEncode::free(buffer);
 	}
 	*/
-	// printf("%p\n", *utf8);
 	printf("%s\n", *utf8);
-	// Sleep(5000);
 }
 
 
-void v8print::setup(Local<ObjectTemplate> global) {
+void v8buffer::setup(Local<ObjectTemplate> global) {
 	// 构造全局对象
 	global->Set(
-		String::NewFromUtf8Literal(_isolate, "print", NewStringType::kNormal),
+		String::NewFromUtf8Literal(_isolate, "buffer", NewStringType::kNormal),
 		FunctionTemplate::New(_isolate, Print)
 	);
 }
 
 // 注意内存泄漏
-v8print* v8print::current(Isolate* isolate) {
-	return global_v8t ? global_v8t : new v8print(isolate);
+v8buffer* v8buffer::current(Isolate* isolate) {
+	return global_v8t ? global_v8t : new v8buffer(isolate);
 }
