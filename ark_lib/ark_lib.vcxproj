@@ -197,6 +197,7 @@
     <ClCompile Include="test.cpp" />
     <ClCompile Include="text_encode.cpp" />
     <ClCompile Include="TimeoutTask.cpp" />
+    <ClCompile Include="v8align.cpp" />
     <ClCompile Include="v8context.cpp" />
     <ClCompile Include="v8driver.cpp" />
     <ClCompile Include="v8env.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="test.h" />
     <ClInclude Include="text_encode.h" />
     <ClInclude Include="TimeoutTask.h" />
+    <ClInclude Include="v8align.h" />
     <ClInclude Include="v8context.h" />
     <ClInclude Include="v8contextDefine.h" />
     <ClInclude Include="v8driver.h" />

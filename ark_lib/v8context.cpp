@@ -6,6 +6,7 @@
 #include "v8print.h"
 #include "v8driver.h"
 #include "v8require.h"
+#include "v8align.h"
 
 #include "file_until.h"
 
@@ -23,6 +24,7 @@ Local<Context> v8context::New(Isolate* isolate) {
 	SETUP_FUNC(v8print, isolate)
 	SETUP_FUNC(v8driver, isolate)
 	SETUP_FUNC(v8require, isolate)
+	SETUP_FUNC(v8align, isolate)
 	
 	return Context::New(isolate, NULL, global);
 }
