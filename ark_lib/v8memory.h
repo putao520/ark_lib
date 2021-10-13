@@ -34,7 +34,7 @@ public:
 	static void f32(const FunctionCallbackInfo<v8::Value>& args);
 	static void f64(const FunctionCallbackInfo<v8::Value>& args);
 
-	static void u8Array(const FunctionCallbackInfo<v8::Value>& args);
+	static void buffer(const FunctionCallbackInfo<v8::Value>& args);
 	static void string(const FunctionCallbackInfo<v8::Value>& args);
 	static void unicode(const FunctionCallbackInfo<v8::Value>& args);
 private:

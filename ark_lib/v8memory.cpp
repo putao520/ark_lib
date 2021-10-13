@@ -450,7 +450,7 @@ void v8memory::i64(const FunctionCallbackInfo<v8::Value>& args) {
 	args.GetReturnValue().SetUndefined();
 }
 
-void v8memory::u8Array(const FunctionCallbackInfo<v8::Value>& args) {
+void v8memory::buffer(const FunctionCallbackInfo<v8::Value>& args) {
 	Isolate* isolate = args.GetIsolate();
 	auto ctx = isolate->GetCurrentContext();
 	if (!ctx.IsEmpty()) {
@@ -463,11 +463,11 @@ void v8memory::u8Array(const FunctionCallbackInfo<v8::Value>& args) {
 			printDebug("address:%p", address);
 #endif
 
-			if (args[1]->IsUint8Array()) {	// 写入
-				auto buffer_ = args[1].As<Uint8Array>();
+			if (args[1]->IsArrayBuffer()) {	// 写入
+				auto buffer_ = args[1].As<ArrayBuffer>();
 				uint32_t size = (uint32_t)buffer_->ByteLength();
 
-				void* buffer = buffer_->Buffer()->GetBackingStore()->Data();
+				void* buffer = buffer_->GetBackingStore()->Data();
 				ActorService::current()
 					->push(buffer)
 					->push(address)
@@ -482,9 +482,8 @@ void v8memory::u8Array(const FunctionCallbackInfo<v8::Value>& args) {
 #ifdef _DEBUG
 				printDebug("size:%d", size);
 #endif
-
 				auto buffer_ = ArrayBuffer::New(isolate, size);
-				auto buffer = buffer_->GetBackingStore().get()->Data();
+				auto buffer = buffer_->GetBackingStore()->Data();
 #ifdef _DEBUG
 				printDebug("Array buffer:%p", buffer);
 #endif
@@ -495,9 +494,8 @@ void v8memory::u8Array(const FunctionCallbackInfo<v8::Value>& args) {
 					->push(size)
 					->run(ActorService::services()->read);
 					
-
 				// memcpy(buffer, (void *)address, size);	// 本地测试用
-				args.GetReturnValue().Set(Uint8Array::New(buffer_, 0, size));
+				args.GetReturnValue().Set(buffer_);
 				return;
 			}
 		}
@@ -749,8 +747,8 @@ void v8memory::setup(Local<ObjectTemplate> parent, Local<String> name) {
 
 	// u8Array 方法
 	template_->Set(
-		String::NewFromUtf8Literal(_isolate, "u8Array", NewStringType::kInternalized),
-		FunctionTemplate::New(_isolate, u8Array)
+		String::NewFromUtf8Literal(_isolate, "buffer", NewStringType::kInternalized),
+		FunctionTemplate::New(_isolate, buffer)
 	);
 
 	// string 方法
