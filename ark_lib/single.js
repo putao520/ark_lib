@@ -1,15 +1,12 @@
-const address = Memory._new(0x1000);
-print("alloc:" + Number(address).toString(16));
+const MemoryBuffer = require("./MemoryBuffer.js");
+const ntoskrnl = require("./ntoskrnl.exe.js");
 
-print("test string")
-Memory.string(address, "putao520和葡萄520");
-const str = Memory.string(address);
-print("string:" + str);
+const eprocess_ptr = memory.alloc(0x1000)
+ntoskrnl.funcs.PsLookupProcessByProcessId(123, eprocess_ptr);
 
-print("test unicode")
-Memory.unicode(address, "putao520和葡萄520");
-const uni = Memory.unicode(address);
-print("unicode:" + uni);
-
-Memory._delete(address);
+const eprocess = ntoskrnl.structs._EPROCESS(eprocess_ptr);
+const name_buffer = eprocess.ImageFileName(0,14);
+const image_name = name_buffer.string();
+print(image_name);
+memory.free(eprocess_ptr);
 "ok"
