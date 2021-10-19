@@ -8,6 +8,7 @@
 #include "PdbInfo.h"
 #include <restclient-cpp/restclient.h>
 #include <restclient-cpp/connection.h>
+#include "file_until.h"
 
 using namespace v8;
 using namespace std;
