@@ -154,8 +154,11 @@ void load_driver() {
 }
 
 void debug_pe() {
-	PdbInfo pdbInfo("c:\\windows\\system32\\hal.dll");
+	// PdbInfo pdbInfo("c:\\windows\\system32\\ntoskrnl.exe");
+	auto file = FileUntil::toAbsolute("./ntoskrnl.exe");
+	PdbInfo pdbInfo(file.c_str());
 	string path = "/download/symbols/" + pdbInfo.getPdbName() + "/" + pdbInfo.getSigned() + "1/" + pdbInfo.getPdbName();
+	std::cout << path << std::endl;
 	RestClient::init();
 	auto client = new RestClient::Connection("http://msdl.microsoft.com");
 	client->SetUserAgent("Microsoft-Symbol-Server/10.1710.0.0");
@@ -163,7 +166,7 @@ void debug_pe() {
 	// headers["Accept-Encoding"] = "gzip";
 	client->AppendHeader("Accept-Encoding", "gzip");
 
-	
+
 
 	auto r = client->get(path);
 	if (r.code == 302) {
@@ -172,6 +175,6 @@ void debug_pe() {
 	if (r.code == 200) {
 
 	}
-	
+
 	RestClient::disable();
 }

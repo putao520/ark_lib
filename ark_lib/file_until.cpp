@@ -17,6 +17,19 @@ FileUntil::FileUntil(const char* file) {
 	this_path = _path;
 }
 
+std::string FileUntil::toAbsolute(const char* file) {
+	path _path(file);
+	if (!_path.is_absolute()) {
+		try {
+			_path = canonical(_path);
+		}
+		catch (...) {
+
+		}
+	}
+	return _path.string();
+}
+
 bool FileUntil::existing() {
 	return exists(this_path);
 }

@@ -22,6 +22,8 @@ public:
 	// ~FileUntil();
 	void* toMemory();
 	bool existing();
+
+	std::string toAbsolute(const char* file);
 private:
 
 	path this_path;

@@ -14,16 +14,17 @@ guid_until::guid_until(_GUID guid_) {
 
 string guid_until::toString() {
     std::stringstream os;
+    os.fill('0');
     os << std::uppercase;
-    // os.width(8);
+    os.width(8);
     // os << std::hex << guid.Data1 << '-';
     os << std::hex << guid.Data1;
 
-    // os.width(4);
+    os.width(4);
     // os << std::hex << guid.Data2 << '-';
     os << std::hex << guid.Data2;
 
-    // os.width(4);
+    os.width(4);
     // os << std::hex << guid.Data3 << '-';
     os << std::hex << guid.Data3;
 
@@ -40,15 +41,11 @@ string guid_until::toString() {
         << static_cast<short>(guid.Data4[6])
         << static_cast<short>(guid.Data4[7]);
         */
-    os << std::hex
-        << static_cast<short>(guid.Data4[0])
-        << static_cast<short>(guid.Data4[1])
-        << static_cast<short>(guid.Data4[2])
-        << static_cast<short>(guid.Data4[3])
-        << static_cast<short>(guid.Data4[4])
-        << static_cast<short>(guid.Data4[5])
-        << static_cast<short>(guid.Data4[6])
-        << static_cast<short>(guid.Data4[7]);
+    for (auto i = 0; i < 8; i++) {
+		os.width(2);
+        os << std::hex
+           << static_cast<short>(guid.Data4[i]);
+    }
     os << std::nouppercase;
 
     return os.str();
