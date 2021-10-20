@@ -494,7 +494,7 @@ void v8memory::buffer(const FunctionCallbackInfo<v8::Value>& args) {
 				goto ru;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
 #ifdef _DEBUG
-			printDebug("address:%p", address);
+			// printDebug("address:%p", address);
 #endif
 			if (!address)
 				goto ru;
@@ -516,12 +516,12 @@ void v8memory::buffer(const FunctionCallbackInfo<v8::Value>& args) {
 					goto ru;
 				uint32_t size = arg_1.ToChecked();
 #ifdef _DEBUG
-				printDebug("size:%d", size);
+				// printDebug("size:%d", size);
 #endif
 				auto buffer_ = ArrayBuffer::New(isolate, size);
 				auto buffer = buffer_->GetBackingStore()->Data();
 #ifdef _DEBUG
-				printDebug("Array buffer:%p", buffer);
+				// printDebug("[read]Array buffer:%p", buffer);
 #endif
 				
 				auto result = ActorService::current()
@@ -529,7 +529,7 @@ void v8memory::buffer(const FunctionCallbackInfo<v8::Value>& args) {
 					->push(address)
 					->push(size)
 					->run(ActorService::services()->read);
-					
+
 				// memcpy(buffer, (void *)address, size);	// ±æµÿ≤‚ ‘”√
 				args.GetReturnValue().Set(buffer_);
 				return;

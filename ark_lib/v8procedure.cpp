@@ -80,7 +80,7 @@ void procedure(const FunctionCallbackInfo<v8::Value>& args) {
 
 #ifdef _DEBUG
 	printf("procedure: %#llx\n", address);
-	__pauseDebug("procedure: %#llx\n", address);
+	// __pauseDebug("procedure: %#llx\n", address);
 #endif
 
 	// 执行中断等级
