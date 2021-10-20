@@ -82,9 +82,12 @@ void v8memory::free(const FunctionCallbackInfo<v8::Value>& args) {
 			auto arg_0 = args[0].As<Value>()->ToBigInt(ctx);
 			if (!arg_0.IsEmpty()) {
 				uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
-				ActorService::current()
-					->push(address)
-					->run(ActorService::services()->free);
+				if (address) {
+					ActorService::current()
+						->push(address)
+						->run(ActorService::services()->free);
+				}
+				
 			}
 		}
 	}
@@ -105,6 +108,8 @@ void v8memory::read(const FunctionCallbackInfo<v8::Value>& args) {
 			if (!arg_1.IsEmpty())
 				goto ru;
 			uint64_t address = arg_1.ToLocalChecked()->Uint64Value();
+			if (!address)
+				goto ru;
 
 			auto arg_2 = args[2].As<Value>()->Uint32Value(ctx);
 			if (!arg_2.IsNothing())
@@ -139,6 +144,8 @@ void v8memory::write(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_1.IsEmpty())
 				goto ru;
 			uint64_t address = arg_1.ToLocalChecked()->Uint64Value();
+			if (!address)
+				goto ru;
 
 			auto arg_2 = args[2].As<Value>()->Uint32Value(ctx);
 			if (arg_2.IsNothing())
@@ -169,6 +176,9 @@ void v8memory::f32(const FunctionCallbackInfo<v8::Value>& args) {
 				if( arg_0.IsEmpty())
 					break;
 				uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+				if (!address)
+					break;
+
 				uint32_t size = 4;
 				float v = 0.0f;
 
@@ -188,6 +198,8 @@ void v8memory::f32(const FunctionCallbackInfo<v8::Value>& args) {
 				if (arg_0.IsEmpty())
 					break;
 				uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+				if (!address)
+					break;
 
 				auto arg_1 = args[1].As<Value>()->NumberValue(ctx);
 				if (arg_1.IsNothing())
@@ -221,6 +233,9 @@ void v8memory::f64(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
+
 			uint32_t size = 8;
 			double v = 0;
 
@@ -238,6 +253,8 @@ void v8memory::f64(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
 
 			auto arg_1 = args[1].As<Value>()->NumberValue(ctx);
 			if (arg_1.IsNothing())
@@ -268,6 +285,8 @@ void v8memory::u32(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
 
 			uint32_t size = 4;
 			uint32_t v = 0;
@@ -286,6 +305,8 @@ void v8memory::u32(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
 
 			auto arg_1 = args[1].As<Value>()->Uint32Value(ctx);
 			if (arg_1.IsNothing())
@@ -316,6 +337,8 @@ void v8memory::i32(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
 			uint32_t size = 4;
 			int32_t v = 0;
 
@@ -333,6 +356,8 @@ void v8memory::i32(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
 
 			auto arg_1 = args[1].As<Value>()->Uint32Value(ctx);
 			if (arg_1.IsNothing())
@@ -362,6 +387,8 @@ void v8memory::u64(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
 			uint32_t size = 8;
 			uint64_t v = 0;
 
@@ -382,6 +409,9 @@ void v8memory::u64(const FunctionCallbackInfo<v8::Value>& args) {
 #ifdef _DEBUG
 			printDebug("address:%p", address);
 #endif
+			if (!address)
+				break;
+
 			auto arg_1 = args[1].As<Value>()->ToBigInt(ctx);
 			if (arg_1.IsEmpty())
 				break;
@@ -413,6 +443,8 @@ void v8memory::i64(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
 			uint32_t size = 8;
 			int64_t v = 0;
 
@@ -430,6 +462,8 @@ void v8memory::i64(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				break;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				break;
 
 			auto arg_1 = args[1].As<Value>()->ToBigInt(ctx);
 			if (arg_1.IsEmpty())
@@ -462,6 +496,8 @@ void v8memory::buffer(const FunctionCallbackInfo<v8::Value>& args) {
 #ifdef _DEBUG
 			printDebug("address:%p", address);
 #endif
+			if (!address)
+				goto ru;
 
 			if (args[1]->IsArrayBuffer()) {	// –¥»Î
 				auto buffer_ = args[1].As<ArrayBuffer>();
@@ -517,6 +553,8 @@ void v8memory::string(const FunctionCallbackInfo<v8::Value>& args) {
 #ifdef _DEBUG
 			printDebug("string address:%p", address);
 #endif
+			if (!address)
+				goto ru;
 
 #ifdef _LOCAL
 			uint32_t size = strlen((char *)address);
@@ -555,6 +593,9 @@ void v8memory::string(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				goto ru;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				goto ru;
+
 			auto arg_1 = args[1].As<Value>()->ToString(ctx);
 			if (arg_1.IsEmpty())
 				goto ru;
@@ -592,6 +633,8 @@ void v8memory::unicode(const FunctionCallbackInfo<v8::Value>& args) {
 #ifdef _DEBUG
 			printDebug("unicode address:%p", address);
 #endif
+			if (!address)
+				return;
 
 #ifdef _LOCAL
 			uint32_t size = wcslen((wchar_t*)address) * sizeof(wchar_t);
@@ -638,6 +681,8 @@ void v8memory::unicode(const FunctionCallbackInfo<v8::Value>& args) {
 			if (arg_0.IsEmpty())
 				return;
 			uint64_t address = arg_0.ToLocalChecked()->Uint64Value();
+			if (!address)
+				return;
 			// auto arg_1 = args[1].As<Value>()->ToString(ctx);
 			auto arg_1 = args[1].As<String>(); // ->ToString(ctx);
 			if (arg_1.IsEmpty())

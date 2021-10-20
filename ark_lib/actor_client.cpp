@@ -12,7 +12,7 @@ actor_client* actor_client::connect() {
 	if (task) {
 
 #ifdef _DEBUG
-		__pauseDebug("actor_client::connect =>%p\n", task);
+		// __pauseDebug("actor_client::connect =>%p\n", task);
 #endif
 
 		task->internal_services = (InternalServices*)calloc(1, sizeof(InternalServices));
@@ -34,7 +34,7 @@ task(nullptr){
 		eHandle = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 #ifdef _DEBUG
 		printf("Events:%p\n", eHandle);
-		__pauseDebug("Events:%p\n", eHandle);
+		// __pauseDebug("Events:%p\n", eHandle);
 #endif
 
 		dHandle->send(IOCTL_IO_ACTOR_NEW, (char*)&eHandle, sizeof(HANDLE), nullptr, 0);
@@ -72,7 +72,7 @@ uintptr_t actor_client::run(void* target, unsigned char interrupt_level) {
 	task->interrupt_level = interrupt_level;
 #ifdef _DEBUG
 	printf("Task Status £º %llu\n", task->status);
-	__pauseDebug("Task Status £º %llu\n", task->status);
+	// __pauseDebug("Task Status £º %llu\n", task->status);
 #endif
 	uintptr_t _status = task->status;
 	task->status = TASK_RUNNING;
@@ -91,7 +91,7 @@ uintptr_t actor_client::runAsRva(const char* name, void* rva, unsigned char irql
 	char* target = (char *)load_module->module(name) + (uintptr_t)rva;
 #ifdef _DEBUG
 	printf("call target:%p\n", target);
-	__pauseDebug("call target:%p\n", target);
+	// __pauseDebug("call target:%p\n", target);
 #endif
 	if (!target)
 		return 0;

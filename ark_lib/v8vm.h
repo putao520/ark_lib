@@ -51,6 +51,7 @@ public:
 						}
 						else {
 							result = trycatch.Exception();
+							v8vm::outputError(_context, &trycatch);
 						}
 
 						// 字符串
@@ -104,6 +105,7 @@ public:
 	// 等待当前隔离对象所有异步对象和异步是否为空
 	v8vm* wait();
 
+	static void outputError(Local<Context> ctx, TryCatch* trycatch);
 	static vector<Isolate*> getAllIsolate();
 private:
 	Isolate* buildIsolate();

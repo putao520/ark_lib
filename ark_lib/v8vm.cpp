@@ -78,3 +78,19 @@ v8vm&& v8vm::from(const char* uri) {
 	}
 	return move(*this);
 }
+
+void v8vm::outputError(Local<Context> ctx, TryCatch * trycatch) {
+	auto isolate = ctx->GetIsolate();
+	String::Utf8Value error_val(isolate, trycatch->Exception());
+	string error_str = *error_val;
+	printf("error: %s\n", error_str.c_str());
+
+	auto msg = trycatch->Message();
+	auto src_line = msg->GetSourceLine(ctx);
+	if (!src_line.IsEmpty()) {
+		Local<String> src_line_str = src_line.ToLocalChecked();
+		String::Utf8Value utf8(isolate, src_line_str);
+		string str = *utf8;
+		printf("line: %s\n", str.c_str());
+	}
+}

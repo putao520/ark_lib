@@ -5,6 +5,7 @@
 #include <string>
 #include "v8contextDefine.h"
 #include <unordered_map>
+#include "v8vm.h"
 
 std::unordered_map<string, Persistent<Value, CopyablePersistentTraits<Value>>> lib;
 thread_local v8require* global_v8t = nullptr;
@@ -22,23 +23,28 @@ void require(const FunctionCallbackInfo<v8::Value>& args) {
 	auto str = args[0].As<Value>()->ToString(isolate->GetCurrentContext());
 	if (str.IsEmpty())
 		return;
-	String::Utf8Value utf8(isolate, str.ToLocalChecked());
+	String::Utf8Value file_name(isolate, str.ToLocalChecked());
+
+#ifdef _DEBUG
+	printf("import :%s\n", *file_name);
+#endif
 
 	// 从缓存记录中获得库对象
-	if (lib.find(*utf8) != lib.end()) {
-		auto result = lib[*utf8].Get(isolate);
+	if (lib.find(*file_name) != lib.end()) {
+		auto result = lib[*file_name].Get(isolate);
 		args.GetReturnValue().Set(result);
 		return;
 	}
 
 	// 从文件中获得库对象
-	FileUntil fp(*utf8);
+	FileUntil fp(*file_name);
 	if (fp.existing()) {
 		auto _context = v8context::New(isolate);
 		Context::Scope context_scope(_context);
 		{
 			MaybeLocal<String> source = String::NewFromUtf8(isolate, (const char*)fp.toMemory());
 			if (!source.IsEmpty()) {
+				TryCatch trycatch(isolate);
 				MaybeLocal<Script> rScript = Script::Compile(_context, source.ToLocalChecked());
 				if (!rScript.IsEmpty()) {
 					Local<Script> script = rScript.ToLocalChecked();
@@ -50,12 +56,21 @@ void require(const FunctionCallbackInfo<v8::Value>& args) {
 							args.GetReturnValue().Set(result);
 							// 记录引入对象结果
 							Persistent<Value, CopyablePersistentTraits<Value>> pResult(isolate, result);
-							lib[*utf8] = pResult;
+							lib[*file_name] = pResult;
 						}
 					}
+					else {
+						v8vm::outputError(_context, &trycatch);
+					}
+				}
+				else {
+					v8vm::outputError(_context, &trycatch);
 				}
 			}
 		}
+	}
+	else {
+		printf("file:%s ->not found\n", *file_name);
 	}
 }
 

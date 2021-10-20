@@ -39,7 +39,7 @@ void driver::flush() {
 						string name = szDriver;
 						load_module[name] = (uintptr_t)drivers[i];
 #ifdef _DEBUG
-						printf("[%d]%s:%p\n", i, szDriver, drivers[i]);
+						// printf("[%d]%s:%p\n", i, szDriver, drivers[i]);
 #endif
 					}
 				}

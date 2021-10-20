@@ -109,11 +109,11 @@
     <Filter Include="源文件\v8_vm\addons\v8time\interval">
       <UniqueIdentifier>{0396157f-021f-4738-8ad1-8c2c264db8d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\v8_vm\addons\Procedure">
-      <UniqueIdentifier>{cf21e8ad-0b50-4963-97c9-89e989a5a763}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\v8_vm\addons\v8align">
       <UniqueIdentifier>{a6a522fa-629b-4edd-9e6c-ef8dd87abf71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\addons\v8Procedure">
+      <UniqueIdentifier>{cf21e8ad-0b50-4963-97c9-89e989a5a763}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +202,7 @@
       <Filter>源文件\v8_vm\addons\v8require</Filter>
     </ClCompile>
     <ClCompile Include="v8procedure.cpp">
-      <Filter>源文件\v8_vm\addons\Procedure</Filter>
+      <Filter>源文件\v8_vm\addons\v8Procedure</Filter>
     </ClCompile>
     <ClCompile Include="v8align.cpp">
       <Filter>源文件\v8_vm\addons\v8align</Filter>
@@ -303,7 +303,7 @@
       <Filter>源文件\v8_vm\v8context</Filter>
     </ClInclude>
     <ClInclude Include="v8procedure.h">
-      <Filter>源文件\v8_vm\addons\Procedure</Filter>
+      <Filter>源文件\v8_vm\addons\v8Procedure</Filter>
     </ClInclude>
     <ClInclude Include="v8align.h">
       <Filter>源文件\v8_vm\addons\v8align</Filter>

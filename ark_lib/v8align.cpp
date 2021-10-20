@@ -19,13 +19,12 @@ void Align(const FunctionCallbackInfo<v8::Value>& args) {
 			auto arg_1 = args[1].As<Value>()->Uint32Value(ctx);
 			if (!arg_1.IsNothing()) {
 				uint32_t v = arg_1.ToChecked();
-				Local<Value> result = BigInt::NewFromUnsigned(isolate, (address + v - 1) & (~(v - 1)));
+				Local<Value> result = BigInt::NewFromUnsigned(isolate, (address + (uint64_t)v - 1ull) & (~((uint64_t)v - 1ull)));
 				args.GetReturnValue().Set(result);
 				return;
 			}
 		}
 	}
-ru:
 	args.GetReturnValue().Set(Undefined(isolate));
 }
 
