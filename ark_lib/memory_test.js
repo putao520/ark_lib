@@ -26,7 +26,7 @@ print(`return:${v4}/0.123456`);
 print("test u8array")
 const s = new Set([1, 2, 3]);
 const u8array = Uint8Array.from(s);
-Memory.u8Array(address, u8array);
+Memory.buffer(address, u8array);
 const arr = Memory.u8Array(address, 3);
 var eArray = arr.entries();
 for( let n of eArray ){
