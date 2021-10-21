@@ -16,6 +16,7 @@ v8procedure::~v8procedure() {
 
 void parameter(actor_client* actor, Isolate* isolate, Local<Value> v, deque<void*>* unicode_ptr_array) {
 	auto context = isolate->GetCurrentContext();
+
 	// Êý×Ö
 	if (v->IsInt32()) {
 #ifdef _DEBUG
