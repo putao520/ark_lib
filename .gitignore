@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/ark_lib/library/hal.dll.js
+/ark_lib/library/ntoskrnl.exe.js

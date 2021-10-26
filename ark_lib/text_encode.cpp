@@ -2,7 +2,7 @@
 #include <unicode/ucnv.h>  
 #include <unicode/utypes.h>  
 #include <unicode/ucsdet.h>  
-
+#include <windows.h>
 #define BUF_MAX     4096  
 
 using namespace std;
@@ -157,3 +157,98 @@ std::string TextEncode::UTF8ToString(const char* utf8Data)
 	return UnicodeToAscii(wString.c_str());
 }
 */
+
+
+wchar_t* TextEncode::utf8_to_unicode(char* strUTF8A) {
+	UINT nLen = MultiByteToWideChar(CP_UTF8, NULL, strUTF8A, -1, NULL, NULL);
+	WCHAR* wszBuffer = new WCHAR[nLen + 1];
+	nLen = MultiByteToWideChar(CP_UTF8, NULL, strUTF8A, -1, wszBuffer, nLen);
+	return wszBuffer;
+}
+
+char* TextEncode::utf8_to_ansi(char* strUTF8A) {
+	wchar_t* wszBuffer = utf8_to_unicode(strUTF8A);
+	char* result = unicode_to_ansi(wszBuffer);
+	delete[] wszBuffer;
+	return result;
+}
+
+char* TextEncode::unicode_to_utf8(wchar_t* strUnicode) {
+	UINT nLen = WideCharToMultiByte(CP_UTF8, NULL, strUnicode, -1, NULL, NULL, NULL, NULL);
+	CHAR* szBuffer = new CHAR[nLen + 1];
+	nLen = WideCharToMultiByte(CP_UTF8, NULL, strUnicode, -1, szBuffer, nLen, NULL, NULL);
+	szBuffer[nLen] = 0;
+	return szBuffer;
+}
+char* TextEncode::ansi_to_utf8(char* strAnsiA) {
+	wchar_t* wszBuffer = ansi_to_unicode(strAnsiA);
+	char* result = unicode_to_utf8(wszBuffer);
+	delete[] wszBuffer;
+	return result;
+}
+wchar_t* TextEncode::ansi_to_unicode(char* strAnsi) {
+	int length = MultiByteToWideChar(CP_ACP, 0, strAnsi, strlen(strAnsi) + 1, NULL, 0);//该函数映射一个字符串到一个宽字符（unicode）的字符串
+	WCHAR* wszBuffer = new WCHAR[length + 1];
+	wszBuffer[length] = 0;
+	MultiByteToWideChar(CP_ACP, 0, strAnsi, strlen(strAnsi) + 1, wszBuffer, length);
+	return wszBuffer;
+}
+char* TextEncode::unicode_to_ansi(wchar_t* strUnicode) {
+	int length = WideCharToMultiByte(CP_ACP, 0, strUnicode, -1, NULL, 0, NULL, NULL);
+	char* szBuffer = new char[length + 1];
+	szBuffer[length] = 0;
+	WideCharToMultiByte(CP_ACP, 0, strUnicode, -1, szBuffer, length, NULL, NULL);
+	return szBuffer;
+}
+
+std::string TextEncode::string_to_utf8(const std::string& str){
+	int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
+
+	wchar_t* pwBuf = new wchar_t[nwLen + 1];//一定要加1，不然会出现尾巴
+	ZeroMemory(pwBuf, nwLen * 2 + 2);
+
+	::MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), pwBuf, nwLen);
+
+	int nLen = ::WideCharToMultiByte(CP_UTF8, 0, pwBuf, -1, NULL, NULL, NULL, NULL);
+
+	char* pBuf = new char[nLen + 1];
+	ZeroMemory(pBuf, nLen + 1);
+
+	::WideCharToMultiByte(CP_UTF8, 0, pwBuf, nwLen, pBuf, nLen, NULL, NULL);
+
+	std::string retStr(pBuf);
+
+	delete[]pwBuf;
+	delete[]pBuf;
+
+	pwBuf = NULL;
+	pBuf = NULL;
+
+	return retStr;
+}
+
+std::string TextEncode::utf8_to_string(const std::string& str){
+	int nwLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, NULL, 0);
+
+	wchar_t* pwBuf = new wchar_t[nwLen + 1];//一定要加1，不然会出现尾巴
+	memset(pwBuf, 0, nwLen * 2 + 2);
+
+	MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.length(), pwBuf, nwLen);
+
+	int nLen = WideCharToMultiByte(CP_ACP, 0, pwBuf, -1, NULL, NULL, NULL, NULL);
+
+	char* pBuf = new char[nLen + 1];
+	memset(pBuf, 0, nLen + 1);
+
+	WideCharToMultiByte(CP_ACP, 0, pwBuf, nwLen, pBuf, nLen, NULL, NULL);
+
+	std::string retStr = pBuf;
+
+	delete[]pBuf;
+	delete[]pwBuf;
+
+	pBuf = NULL;
+	pwBuf = NULL;
+
+	return retStr;
+}

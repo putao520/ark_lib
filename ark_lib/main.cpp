@@ -4,25 +4,15 @@
 #include <iostream>
 #include <include/libplatform/libplatform.h>
 #include <include/v8.h>
-#include "test.h"
+#include "gs_main.h"
 
 
 int main(int argc, char* argv[])
 {
 	system("chcp 65001");
 
-	/*
-#ifdef _LOCAL
-	test_v8vm();
-#else
-	load_v8vm();
-#endif
-	*/
+	gs_main::main();
 
-	// debug_pe();
-	test_v8vm();
-
-	// load_driver();
 	system("pause");
 }
 

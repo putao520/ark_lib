@@ -19,12 +19,16 @@ public:
 	
 
 	FileUntil(const char* file);
+	FileUntil(const std::string& file);
 	// ~FileUntil();
 	void* toMemory();
 	bool existing();
-
+	void write(const char*, size_t=0);
+	void writeString(const std::string& data);
 	static std::string toAbsolute(const char* file);
+
 private:
+	void init(const char* file);
 
 	path this_path;
 	char* buffer;

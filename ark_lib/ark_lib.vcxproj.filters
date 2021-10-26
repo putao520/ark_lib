@@ -115,6 +115,18 @@
     <Filter Include="源文件\v8_vm\addons\v8Procedure">
       <UniqueIdentifier>{cf21e8ad-0b50-4963-97c9-89e989a5a763}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\dev_library">
+      <UniqueIdentifier>{d047ff82-dc2c-4d25-af87-a66773709bd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\memory_until">
+      <UniqueIdentifier>{e5acdb6f-dd05-4c40-aec8-63a8b9899e91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\logger_until">
+      <UniqueIdentifier>{2754345e-ffae-4dbc-ac27-d129f37694bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\gs_main">
+      <UniqueIdentifier>{ef373c67-4ca2-409d-bf28-ae0e2062146b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -206,6 +218,15 @@
     </ClCompile>
     <ClCompile Include="v8align.cpp">
       <Filter>源文件\v8_vm\addons\v8align</Filter>
+    </ClCompile>
+    <ClCompile Include="library_manager.cpp">
+      <Filter>源文件\dev_library</Filter>
+    </ClCompile>
+    <ClCompile Include="logger_until.cpp">
+      <Filter>源文件\until\logger_until</Filter>
+    </ClCompile>
+    <ClCompile Include="gs_main.cpp">
+      <Filter>源文件\gs_main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -307,6 +328,18 @@
     </ClInclude>
     <ClInclude Include="v8align.h">
       <Filter>源文件\v8_vm\addons\v8align</Filter>
+    </ClInclude>
+    <ClInclude Include="library_manager.h">
+      <Filter>源文件\dev_library</Filter>
+    </ClInclude>
+    <ClInclude Include="memory_until.h">
+      <Filter>源文件\until\memory_until</Filter>
+    </ClInclude>
+    <ClInclude Include="logger_until.h">
+      <Filter>源文件\until\logger_until</Filter>
+    </ClInclude>
+    <ClInclude Include="gs_main.h">
+      <Filter>源文件\gs_main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

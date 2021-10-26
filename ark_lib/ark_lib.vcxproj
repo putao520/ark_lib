@@ -185,7 +185,10 @@
     <ClCompile Include="debug_until.cpp" />
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="DriverLoaderService.cpp" />
+    <ClCompile Include="gs_main.cpp" />
     <ClCompile Include="guid_until.cpp" />
+    <ClCompile Include="library_manager.cpp" />
+    <ClCompile Include="logger_until.cpp" />
     <ClCompile Include="PdbInfo.cpp" />
     <ClCompile Include="print_until.cpp" />
     <ClCompile Include="process_adjust.cpp" />
@@ -220,7 +223,11 @@
     <ClInclude Include="debug_until.h" />
     <ClInclude Include="driver.h" />
     <ClInclude Include="DriverLoaderService.h" />
+    <ClInclude Include="gs_main.h" />
     <ClInclude Include="guid_until.h" />
+    <ClInclude Include="library_manager.h" />
+    <ClInclude Include="logger_until.h" />
+    <ClInclude Include="memory_until.h" />
     <ClInclude Include="PdbInfo.h" />
     <ClInclude Include="print_until.h" />
     <ClInclude Include="process_adjust.h" />
