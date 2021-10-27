@@ -8,9 +8,7 @@
 #include <thread>
 
 using namespace v8;
-using namespace std;
-
-extern unique_ptr<Platform> g_default_platform;
+extern std::unique_ptr<Platform> g_default_platform;
 
 /**
 * 实现 v8 执行引擎的Cpp封装
@@ -18,9 +16,9 @@ extern unique_ptr<Platform> g_default_platform;
 class v8vm {
 public:
 	~v8vm();
-	v8vm&& script(const char* script);
-	v8vm&& load(const char* file);
-	v8vm&& from(const char* uri);
+	v8vm& script(const char* script);
+	v8vm& load(const char* file);
+	v8vm& from(const char* uri);
 	template<typename T>
 	T exec() {
 		T r;
@@ -55,36 +53,36 @@ public:
 						}
 
 						// 字符串
-						if constexpr (is_same<decay<T>::type, string>::value) {
+						if constexpr (std::is_same<std::decay<T>::type, std::string>::value) {
 							String::Utf8Value utf8(_isolate, result);
-							string str = *utf8;
+							std::string str = *utf8;
 							r = str;
 						}
 						// 有符号 32位 整数
-						else if constexpr (is_signed<T>::value && is_integral<T>::value && sizeof(T) == 4) {
+						else if constexpr (std::is_signed<T>::value && std::is_integral<T>::value && sizeof(T) == 4) {
 							r = result->Int32Value(_context).ToChecked();
 
 						}
 						// 无符号 32位 整数
-						else if constexpr (is_unsigned<T>::value && is_integral<T>::value && sizeof(T) == 4) {
+						else if constexpr (std::is_unsigned<T>::value && std::is_integral<T>::value && sizeof(T) == 4) {
 							r = result->Uint32Value(_context).ToChecked();
 
 						}
 						// 有符号 64位 整数
-						else if constexpr (is_signed<T>::value && is_integral<T>::value && sizeof(T) == 8) {
+						else if constexpr (std::is_signed<T>::value && std::is_integral<T>::value && sizeof(T) == 8) {
 							r = result->ToBigInt(_context).ToLocalChecked()->Int64Value();
 
 						}
 						// 无符号 64位 整数
-						else if constexpr (is_unsigned<T>::value && is_integral<T>::value && sizeof(T) == 8) {
+						else if constexpr (std::is_unsigned<T>::value && std::is_integral<T>::value && sizeof(T) == 8) {
 							r = result->ToBigInt(_context).ToLocalChecked()->Uint64Value();
 						}
 						// double
-						else if constexpr (is_floating_point<T>::value && sizeof(T) == 8) {
+						else if constexpr (std::is_floating_point<T>::value && sizeof(T) == 8) {
 							r = result->NumberValue(_context).ToChecked();
 						}
 						// float
-						else if constexpr (is_floating_point<T>::value && sizeof(T) == 44) {
+						else if constexpr (std::is_floating_point<T>::value && sizeof(T) == 44) {
 							r = static_cast<float>(result->NumberValue(_context).ToChecked());
 						}
 
@@ -103,14 +101,14 @@ public:
 	v8vm(const v8vm&& that) noexcept;
 	
 	// 等待当前隔离对象所有异步对象和异步是否为空
-	v8vm* wait();
+	v8vm& wait();
 
 	static void outputError(Local<Context> ctx, TryCatch* trycatch);
-	static vector<Isolate*> getAllIsolate();
+	static std::vector<Isolate*> getAllIsolate();
 private:
 	Isolate* buildIsolate();
 
-	unique_ptr<Isolate::CreateParams> p_create_params;
+	std::unique_ptr<Isolate::CreateParams> p_create_params;
 	Isolate* _isolate;
 	const char* _script;
 };

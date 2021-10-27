@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>	// ostringstream ¿‡–Õ
 
+using namespace std;
 guid_until::guid_until(_GUID* guid_) : guid({ 0 }) {
 	if (guid_) {
 		memcpy(&guid, guid_, sizeof(_GUID));
@@ -58,4 +59,29 @@ guid_until* guid_until::New(_GUID* guid_) {
 guid_until guid_until::Instance(_GUID* guid_) {
     guid_until self(guid_);
     return self;
+}
+
+string guid_until::getRandomUUID(size_t length) {
+	srand((unsigned int)time(NULL));
+	int i;
+    char* str = new char[length + 1];
+	for (i = 0; i < length; ++i)
+	{
+		switch ((rand() % 3))
+		{
+		case 1:
+			str[i] = 'A' + rand() % 26;
+			break;
+		case 2:
+			str[i] = 'a' + rand() % 26;
+			break;
+		default:
+			str[i] = '0' + rand() % 10;
+			break;
+		}
+	}
+	str[++i] = '\0';
+    string r(str);
+    delete[] str;
+    return r;
 }

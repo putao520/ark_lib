@@ -11,6 +11,8 @@
 
 #include "file_until.h"
 
+using namespace std;
+
 #define SETUP_FUNC(type, isolate) type::current(isolate)->setup(global);
 #define SETUP_OBJ(type, isolate, name) type::current(isolate)->setup(global, String::NewFromUtf8(isolate, name, NewStringType::kInternalized).ToLocalChecked());
 Local<Context> v8context::New(Isolate* isolate) {

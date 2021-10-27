@@ -23,7 +23,7 @@ vector<Isolate*> v8vm::getAllIsolate() {
 }
 
 
-v8vm* v8vm::wait() {
+v8vm& v8vm::wait() {
 	// 获得异步队列对象
 	while (!v8time::current(_isolate)->isEmpty())
 		platform::PumpMessageLoop(g_default_platform.get(), _isolate);
@@ -35,7 +35,7 @@ v8vm* v8vm::wait() {
 	while (platform::PumpMessageLoop(g_default_platform.get(), _isolate))
 		continue;
 
-	return this;
+	return *this;
 }
 
 Isolate* v8vm::buildIsolate() {
@@ -53,12 +53,12 @@ v8vm::~v8vm() {
 	delete p_create_params.get()->array_buffer_allocator;
 }
 
-v8vm&& v8vm::script(const char * script) {
+v8vm& v8vm::script(const char * script) {
 	_script = script;
-	return move(*this);
+	return *this;
 }
 
-v8vm&& v8vm::load(const char* file) {
+v8vm& v8vm::load(const char* file) {
 	FileUntil fileIo(file);
 	char* context = static_cast<char *>(fileIo.toMemory());
 	if (context) {
@@ -68,15 +68,15 @@ v8vm&& v8vm::load(const char* file) {
 		}
 		
 	}
-	return move(*this);
+	return *this;
 }
 
-v8vm&& v8vm::from(const char* uri) {
+v8vm& v8vm::from(const char* uri) {
 	RestClient::Response r = RestClient::get(uri);
 	if (r.code == 200) {
 		this->script(r.body.c_str());
 	}
-	return move(*this);
+	return *this;
 }
 
 void v8vm::outputError(Local<Context> ctx, TryCatch * trycatch) {

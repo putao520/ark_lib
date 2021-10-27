@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include "v8vm.h"
 
+using namespace std;
 std::unordered_map<string, Persistent<Value, CopyablePersistentTraits<Value>>> lib;
 thread_local v8require* global_v8t = nullptr;
 v8require::v8require(Isolate* isolate) :

@@ -127,6 +127,27 @@
     <Filter Include="源文件\gs_main">
       <UniqueIdentifier>{ef373c67-4ca2-409d-bf28-ae0e2062146b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\v8_vm\v8task">
+      <UniqueIdentifier>{7036ab46-243b-4473-ad28-ab471b47ace3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8task\task">
+      <UniqueIdentifier>{14a3c9e1-99a4-4e81-85a7-f882a27a78c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8task\dispatch">
+      <UniqueIdentifier>{7126014a-37ce-447f-8cbe-a282fac30289}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\services\CmdService">
+      <UniqueIdentifier>{7137f754-9d00-4190-9d15-0a8df9725313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\v8_vm\v8task\worker">
+      <UniqueIdentifier>{68aa7976-0996-45e5-8fb2-864683049bee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\until\system\info">
+      <UniqueIdentifier>{bd9b60a6-1d64-4754-864a-91198d612009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\protocol">
+      <UniqueIdentifier>{841cb526-304d-40fa-9a7f-17d1acf95b5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -227,6 +248,24 @@
     </ClCompile>
     <ClCompile Include="gs_main.cpp">
       <Filter>源文件\gs_main</Filter>
+    </ClCompile>
+    <ClCompile Include="v8job.cpp">
+      <Filter>源文件\v8_vm\v8task\task</Filter>
+    </ClCompile>
+    <ClCompile Include="v8task_dispatch.cpp">
+      <Filter>源文件\v8_vm\v8task\dispatch</Filter>
+    </ClCompile>
+    <ClCompile Include="v8cron_job.cpp">
+      <Filter>源文件\v8_vm\v8task\task</Filter>
+    </ClCompile>
+    <ClCompile Include="CmdService.cpp">
+      <Filter>源文件\services\CmdService</Filter>
+    </ClCompile>
+    <ClCompile Include="v8Worker.cpp">
+      <Filter>源文件\v8_vm\v8task\worker</Filter>
+    </ClCompile>
+    <ClCompile Include="info.cpp">
+      <Filter>源文件\until\system\info</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -341,10 +380,33 @@
     <ClInclude Include="gs_main.h">
       <Filter>源文件\gs_main</Filter>
     </ClInclude>
+    <ClInclude Include="v8job.h">
+      <Filter>源文件\v8_vm\v8task\task</Filter>
+    </ClInclude>
+    <ClInclude Include="v8task_dispatch.h">
+      <Filter>源文件\v8_vm\v8task\dispatch</Filter>
+    </ClInclude>
+    <ClInclude Include="v8cron_job.h">
+      <Filter>源文件\v8_vm\v8task\task</Filter>
+    </ClInclude>
+    <ClInclude Include="CmdService.h">
+      <Filter>源文件\services\CmdService</Filter>
+    </ClInclude>
+    <ClInclude Include="v8Worker.h">
+      <Filter>源文件\v8_vm\v8task\worker</Filter>
+    </ClInclude>
+    <ClInclude Include="info.h">
+      <Filter>源文件\until\system\info</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="build.txt">
       <Filter>源文件</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="protocol.md">
+      <Filter>源文件\protocol</Filter>
+    </None>
   </ItemGroup>
 </Project>
