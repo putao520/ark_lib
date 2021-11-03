@@ -9,4 +9,7 @@ sdk 10.0.19041.0
 ```[x64-windows-static]
 vcpkg install v8
 vcpkg install restclient-cpp
+vcpkg install concurrentqueue
+vcpkg install spdlog
+vcpkg install nlohmann-json
 ```

@@ -143,7 +143,7 @@ int library_manager::download(const std::vector<std::string>& download_list) {
 		if (result["code"] != 0)
 			return false;
 		json data = result["data"];
-		string info = data.dump();
+		// string info = data.dump();
 		for (auto& [sni, url] : data.items()) {
 			auto r = RestClient::get(url);
 			if (r.code != 200)
