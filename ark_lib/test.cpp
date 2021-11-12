@@ -199,9 +199,15 @@ void test_websocket() {
 		conn.sendText("received:" + msg);
 				 });
 
+	std::string host = "ws://127.0.0.1:8080/ws?deviceId=putao520Target&deviceClass=0";
+	ws.Start(host);
+
+	printf("等待人工组队");
+	system("pause");
 	uint32_t c = 0;
 	while (c < 10) {
 		Sleep(3000);
 		ws.SendText(std::format("Send Message:{}", c));
+		c++;
 	}
 }

@@ -13,8 +13,6 @@ int main(int argc, char* argv[])
 	system("chcp 65001");
 
 	// gs_main::main();
-
-	debug_pe();
 	test_websocket();
 
 	system("pause");

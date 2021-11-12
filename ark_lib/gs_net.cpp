@@ -37,11 +37,13 @@ namespace gs_net {
 				break;
 			}
 		 });
+		pWebSocket->start();
 		return *this;
 	}
 
 	WebsockerServer& WebsockerServer::Close() {
 		if (pWebSocket) {
+			pWebSocket->stop();
 			pWebSocket->close();
 		}
 		return *this;
