@@ -6,12 +6,16 @@
 #include <include/v8.h>
 #include "gs_main.h"
 
+#include "test.h"
 
 int main(int argc, char* argv[])
 {
 	system("chcp 65001");
 
-	gs_main::main();
+	// gs_main::main();
+
+	debug_pe();
+	test_websocket();
 
 	system("pause");
 }

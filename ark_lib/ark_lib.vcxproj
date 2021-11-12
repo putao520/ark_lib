@@ -143,12 +143,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>V8_COMPRESS_POINTERS ;BOOST_LEAF_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>V8_COMPRESS_POINTERS;_DEBUG;_CONSOLE;_PEPARSE_WINDOWS_CONFLICTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <ForcedIncludeFiles>iso646.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../LIEF/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,12 +164,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>V8_COMPRESS_POINTERS ;BOOST_LEAF_NO_EXCEPTIONS;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>V8_COMPRESS_POINTERS;_PEPARSE_WINDOWS_CONFLICTS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <ForcedIncludeFiles>iso646.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../../LIEF/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -187,6 +189,7 @@
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="DriverLoaderService.cpp" />
     <ClCompile Include="gs_main.cpp" />
+    <ClCompile Include="gs_net.cpp" />
     <ClCompile Include="guid_until.cpp" />
     <ClCompile Include="info.cpp" />
     <ClCompile Include="library_manager.cpp" />
@@ -231,6 +234,7 @@
     <ClInclude Include="driver.h" />
     <ClInclude Include="DriverLoaderService.h" />
     <ClInclude Include="gs_main.h" />
+    <ClInclude Include="gs_net.h" />
     <ClInclude Include="guid_until.h" />
     <ClInclude Include="info.h" />
     <ClInclude Include="library_manager.h" />

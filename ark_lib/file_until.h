@@ -2,8 +2,6 @@
 #include <iostream>
 #include <filesystem>
 
-using namespace std::filesystem;
-
 enum class TEXT_TYPE
 {
 	TEXT_ANSI = 0,
@@ -30,7 +28,7 @@ public:
 private:
 	void init(const char* file);
 
-	path this_path;
+	std::filesystem::path this_path;
 	char* buffer;
 	size_t size;
 };

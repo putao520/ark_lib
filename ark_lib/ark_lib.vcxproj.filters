@@ -148,6 +148,9 @@
     <Filter Include="源文件\protocol">
       <UniqueIdentifier>{841cb526-304d-40fa-9a7f-17d1acf95b5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\gs_net">
+      <UniqueIdentifier>{726f4dbf-4325-4371-b6d2-ebf9058f0e05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -266,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="info.cpp">
       <Filter>源文件\until\system\info</Filter>
+    </ClCompile>
+    <ClCompile Include="gs_net.cpp">
+      <Filter>源文件\gs_net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="info.h">
       <Filter>源文件\until\system\info</Filter>
+    </ClInclude>
+    <ClInclude Include="gs_net.h">
+      <Filter>源文件\gs_net</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

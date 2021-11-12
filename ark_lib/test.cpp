@@ -9,7 +9,7 @@
 #include <restclient-cpp/restclient.h>
 #include <restclient-cpp/connection.h>
 #include "file_until.h"
-
+#include "gs_net.h"
 using namespace v8;
 using namespace std;
 void load_v8vm() {
@@ -156,9 +156,9 @@ void load_driver() {
 
 void debug_pe() {
 	// PdbInfo pdbInfo("c:\\windows\\system32\\ntoskrnl.exe");
-	auto file = FileUntil::toAbsolute("./ntoskrnl.exe");
+	auto file = FileUntil::toAbsolute("c:\\windows\\system32\\hal.dll");
 	PdbInfo pdbInfo(file.c_str());
-	string path = "/download/symbols/" + pdbInfo.getPdbName() + "/" + pdbInfo.getSigned() + "1/" + pdbInfo.getPdbName();
+	string path = "/download/symbols/" + pdbInfo.getPdbName() + "/" + pdbInfo.getSigned() + "/" + pdbInfo.getPdbName();
 	std::cout << path << std::endl;
 	RestClient::init();
 	auto client = new RestClient::Connection("http://msdl.microsoft.com");
@@ -178,4 +178,30 @@ void debug_pe() {
 	}
 
 	RestClient::disable();
+}
+
+void test_websocket() {
+	gs_net::WebsockerServer ws;
+	ws.onOpen([](ix::WebSocket& conn, ix::WebSocketOpenInfo info) {
+		std::cout << "connected" << std::endl;
+			  });
+
+	ws.onClose([](ix::WebSocket& conn, ix::WebSocketCloseInfo info) {
+		std::cout << "closed" << std::endl;
+			   });
+
+	ws.onError([](ix::WebSocket& conn, ix::WebSocketErrorInfo info) {
+		std::cout << "error:" << info.reason << std::endl;
+			   });
+
+	ws.onMessage([](ix::WebSocket& conn, std::string msg) {
+		std::cout << "receive:" << msg << std::endl;
+		conn.sendText("received:" + msg);
+				 });
+
+	uint32_t c = 0;
+	while (c < 10) {
+		Sleep(3000);
+		ws.SendText(std::format("Send Message:{}", c));
+	}
 }
