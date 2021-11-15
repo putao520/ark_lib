@@ -12,4 +12,6 @@ vcpkg install restclient-cpp
 vcpkg install concurrentqueue
 vcpkg install spdlog
 vcpkg install nlohmann-json
+vcpkg install pe-parse
+vcpkg install ixwebsocket
 ```

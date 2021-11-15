@@ -210,4 +210,5 @@ void test_websocket() {
 		ws.SendText(std::format("Send Message:{}", c));
 		c++;
 	}
+	ws.Close();
 }

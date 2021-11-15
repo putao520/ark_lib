@@ -11,6 +11,9 @@ namespace gs_net {
 			ix::initNetSystem();
 		}
 	}
+	WebsockerServer::~WebsockerServer() {
+		this->Close();
+	}
 
 	WebsockerServer& WebsockerServer::Start(std::string& url) {
 		pWebSocket = std::make_shared<ix::WebSocket>();

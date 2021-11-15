@@ -9,6 +9,7 @@ namespace gs_net {
 	class WebsockerServer {
 	public:
 		WebsockerServer();
+		~WebsockerServer();
 		WebsockerServer& Start(std::string& url);
 		WebsockerServer& Close();
 
